@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FAF8F4" />
+  <title>База ИИ — понятный старт в нейросетях без хаоса и страха</title>
+  <meta name="description" content="База ИИ — понятный старт в нейросетях для новичков. Освой ИИ для жизни, контента, блога, работы и первых онлайн-услуг. Без сложных терминов и хаоса." />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF3D77'/%3E%3Cstop offset='0.5' stop-color='%23A974FF'/%3E%3Cstop offset='1' stop-color='%232F7DFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='15' r='5' fill='white' opacity='0.9'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a href="#top" class="logo" aria-label="База ИИ — на главную">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__text">База&nbsp;ИИ</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <a href="#audience" class="nav__link">Для кого</a>
+        <a href="#inside" class="nav__link">Что внутри</a>
+        <a href="#program" class="nav__link">Программа</a>
+        <a href="#pricing" class="nav__link">Тарифы</a>
+        <a href="#faq" class="nav__link">FAQ</a>
+        <a href="#pricing" class="btn btn--primary nav__cta">Начать обучение</a>
+      </nav>
+
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="hero__glow hero__glow--1" aria-hidden="true"></div>
+      <div class="hero__glow hero__glow--2" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <div class="hero__copy reveal">
+          <span class="badge-pill">
+            <span class="badge-pill__dot" aria-hidden="true"></span>
+            Понятный старт в нейросетях
+          </span>
+
+          <h1 class="hero__title">
+            База&nbsp;ИИ — понятный старт в нейросетях
+            <span class="grad-text">без хаоса и страха</span>
+          </h1>
+
+          <p class="hero__subtitle">
+            Освой нейросети с нуля и начни применять ИИ для жизни, контента, блога,
+            работы и первых онлайн-услуг. Без сложных терминов, бесконечного поиска
+            сервисов и ощущения, что ты «не из IT».
+          </p>
+
+          <div class="hero__actions">
+            <a href="#pricing" class="btn btn--primary btn--lg">Начать обучение</a>
+            <a href="#program" class="btn btn--ghost btn--lg">Посмотреть программу</a>
+          </div>
+
+          <ul class="chips" aria-label="Преимущества">
+            <li class="chip">Для новичков</li>
+            <li class="chip">Доступ на год</li>
+            <li class="chip">Можно с телефона</li>
+            <li class="chip">Практика с первого урока</li>
+            <li class="chip">Бесплатные и платные инструменты</li>
+          </ul>
+        </div>
+
+        <!-- Visual: единая AI-система -->
+        <div class="hero__visual reveal" aria-hidden="true">
+          <div class="hero-system">
+            <svg class="hero-system__lines" viewBox="0 0 460 460" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#FF5B8A" stop-opacity="0.55" />
+                  <stop offset="0.5" stop-color="#B78CFF" stop-opacity="0.5" />
+                  <stop offset="1" stop-color="#4A8DFF" stop-opacity="0.55" />
+                </linearGradient>
+              </defs>
+              <g stroke="url(#lineGrad)" stroke-width="1.5" fill="none">
+                <path d="M230 230 L70 70" />
+                <path d="M230 230 L400 105" />
+                <path d="M230 230 L60 250" />
+                <path d="M230 230 L390 330" />
+                <path d="M230 230 L165 415" />
+              </g>
+              <g fill="#B78CFF">
+                <circle cx="70" cy="70" r="3" /><circle cx="400" cy="105" r="3" />
+                <circle cx="60" cy="250" r="3" /><circle cx="390" cy="330" r="3" />
+                <circle cx="165" cy="415" r="3" />
+              </g>
+            </svg>
+
+            <div class="orb">
+              <div class="orb__ring orb__ring--1"></div>
+              <div class="orb__ring orb__ring--2"></div>
+              <div class="orb__ring orb__ring--3"></div>
+              <div class="orb__glass"></div>
+              <div class="orb__core">
+                <span class="orb__shine"></span>
+                <span class="orb__swirl"></span>
+              </div>
+              <span class="orb__spark orb__spark--1"></span>
+              <span class="orb__spark orb__spark--2"></span>
+              <span class="orb__spark orb__spark--3"></span>
+            </div>
+
+            <div class="float-card float-card--1">
+              <span class="float-card__icon ic-grad ic-grad--pink">
+                <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+              </span>
+              <span>Тексты</span>
+            </div>
+            <div class="float-card float-card--2">
+              <span class="float-card__icon ic-grad ic-grad--blue">
+                <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16l-5-5-7 7"/></svg>
+              </span>
+              <span>Фото</span>
+            </div>
+            <div class="float-card float-card--3">
+              <span class="float-card__icon ic-grad ic-grad--violet">
+                <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>
+              </span>
+              <span>Видео</span>
+            </div>
+            <div class="float-card float-card--4">
+              <span class="float-card__icon ic-grad ic-grad--peach">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v3M8 20h8"/></svg>
+              </span>
+              <span>Презентации</span>
+            </div>
+            <div class="float-card float-card--5">
+              <span class="float-card__icon ic-grad ic-grad--teal">
+                <svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h0M15 13h0"/></svg>
+              </span>
+              <span>AI-помощники</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAIN ===================== -->
+    <section class="section pain" id="pain">
+      <div class="pain__blob pain__blob--1" aria-hidden="true"></div>
+      <div class="pain__blob pain__blob--2" aria-hidden="true"></div>
+      <div class="pain__dots" aria-hidden="true"></div>
+      <div class="pain__spark pain__spark--1" aria-hidden="true"></div>
+      <div class="pain__spark pain__spark--2" aria-hidden="true"></div>
+      <div class="pain__spark pain__spark--3" aria-hidden="true"></div>
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="eyebrow">Знакомо?</span>
+          <h2 class="section__title">Все говорят про ИИ, но непонятно, с чего начать?</h2>
+          <p class="section__lead">Когда вокруг сотни сервисов и советов, легко растеряться. Вот что чаще всего останавливает:</p>
+        </header>
+
+        <div class="grid grid--3">
+          <article class="pain-card pain-card--pink reveal">«Я уже опоздала?»</article>
+          <article class="pain-card pain-card--violet reveal">«Какие сервисы реально нужны?»</article>
+          <article class="pain-card pain-card--blue reveal">«Что платное, а что бесплатное?»</article>
+          <article class="pain-card pain-card--teal reveal">«Как писать запросы?»</article>
+          <article class="pain-card pain-card--peach reveal">«Как использовать ИИ для блога и работы?»</article>
+          <article class="pain-card pain-card--ai reveal">«Как не утонуть в хаосе?»</article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WHAT IS ===================== -->
+    <section class="section section--tint" id="what">
+      <div class="container what__inner">
+        <div class="what__media reveal" aria-hidden="true">
+          <div class="platform">
+            <div class="platform__bar">
+              <span class="platform__dot"></span><span class="platform__dot"></span><span class="platform__dot"></span>
+              <span class="platform__title">База&nbsp;ИИ · моё обучение</span>
+            </div>
+            <div class="platform__body">
+              <div class="platform__progress">
+                <span class="platform__progress-label">Прогресс курса</span>
+                <span class="platform__progress-val">64%</span>
+                <span class="platform__bar-track"><span class="platform__bar-fill"></span></span>
+              </div>
+
+              <div class="lesson">
+                <span class="lesson__ic lesson__ic--done"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span>
+                <span class="lesson__text"><b>Урок 3.</b> Как писать запросы</span>
+                <span class="lesson__tag lesson__tag--done">пройден</span>
+              </div>
+              <div class="lesson lesson--active">
+                <span class="lesson__ic lesson__ic--play"><svg viewBox="0 0 24 24"><path d="M9 7l9 5-9 5z" fill="currentColor" stroke="none"/></svg></span>
+                <span class="lesson__text"><b>Урок 4.</b> Контент для блога</span>
+                <span class="lesson__tag lesson__tag--now">сейчас</span>
+              </div>
+              <div class="lesson">
+                <span class="lesson__ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></span>
+                <span class="lesson__text"><b>Урок 5.</b> Нейрофото и видео</span>
+              </div>
+
+              <div class="platform__route">
+                <span class="route-pill route-pill--a">Урок</span>
+                <span class="route-arrow">→</span>
+                <span class="route-pill route-pill--b">Практика</span>
+                <span class="route-arrow">→</span>
+                <span class="route-pill route-pill--c">Результат</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-card mini-card--a">
+            <span class="ic-grad ic-grad--violet"><svg viewBox="0 0 24 24"><path d="M5 5h14v9H8l-3 3z"/></svg></span>
+            Готовые промпты
+          </div>
+          <div class="mini-card mini-card--b">
+            <span class="ic-grad ic-grad--teal"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span>
+            Подборки сервисов
+          </div>
+        </div>
+
+        <div class="what__copy reveal">
+          <span class="eyebrow">Что такое База ИИ</span>
+          <h2 class="section__title">Это не сложный IT-курс, а понятная база для новичков</h2>
+          <p class="section__lead">
+            «База ИИ» собирает всё, что нужно для уверенного старта, в одном месте — без воды
+            и перегруза. Ты учишься на практике короткими шагами и сразу применяешь результат.
+          </p>
+          <ul class="check-list">
+            <li>Короткие практические уроки, которые легко смотреть с телефона</li>
+            <li>Понятные инструкции — без терминов «не из IT»</li>
+            <li>Готовые промпты, которые можно копировать и адаптировать</li>
+            <li>Подборки бесплатных и платных сервисов под конкретные задачи</li>
+          </ul>
+          <a href="#pricing" class="btn btn--primary">Начать обучение</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AUDIENCE ===================== -->
+    <section class="section ai-bg" id="audience">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="eyebrow">Для кого</span>
+          <h2 class="section__title">Подойдёт, если ты хочешь освоить ИИ для жизни, блога и первых онлайн-услуг</h2>
+        </header>
+
+        <div class="grid grid--3">
+          <article class="aud-card aud-card--pink reveal">
+            <span class="aud-card__icon ic-grad ic-grad--pink">
+              <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-9.5A3.5 3.5 0 0 1 12 8a3.5 3.5 0 0 1 7 3.5C19 16.5 12 21 12 21z"/></svg>
+            </span>
+            <h3>Мамам</h3>
+            <p>Высвободить время на себя и семью: ИИ берёт на себя рутину, тексты и идеи.</p>
+          </article>
+          <article class="aud-card aud-card--violet reveal">
+            <span class="aud-card__icon ic-grad ic-grad--violet">
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2L21 9l-5 4.3L17.6 20 12 16.5 6.4 20 8 13.3 3 9l6.6-.8z"/></svg>
+            </span>
+            <h3>Блогерам</h3>
+            <p>Идеи, посты, фото и видео для контента — стабильно, быстро и в своём стиле.</p>
+          </article>
+          <article class="aud-card aud-card--blue reveal">
+            <span class="aud-card__icon ic-grad ic-grad--blue">
+              <svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 4.5-3.2 7.5-8 9-4.8-1.5-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <h3>Экспертам</h3>
+            <p>Упаковать знания, готовить материалы и презентации — без выгорания и хаоса.</p>
+          </article>
+          <article class="aud-card aud-card--teal reveal">
+            <span class="aud-card__icon ic-grad ic-grad--teal">
+              <svg viewBox="0 0 24 24"><path d="M14 4l6 6-9 9H5v-6z"/><path d="M12 6l6 6"/></svg>
+            </span>
+            <h3>Фрилансерам</h3>
+            <p>Делать задачи в разы быстрее и предлагать клиентам новые ИИ-услуги.</p>
+          </article>
+          <article class="aud-card aud-card--peach reveal">
+            <span class="aud-card__icon ic-grad ic-grad--peach">
+              <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+            </span>
+            <h3>Предпринимателям</h3>
+            <p>Автоматизировать контент, маркетинг и общение с клиентами без большой команды.</p>
+          </article>
+          <article class="aud-card aud-card--ai reveal">
+            <span class="aud-card__icon ic-grad ic-grad--ai">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <h3>Новичкам</h3>
+            <p>Начать с нуля спокойно и по шагам — без страха и ощущения, что ты «не из IT».</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ROADMAP ===================== -->
+    <section class="section section--tint ai-bg" id="roadmap">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="eyebrow">Маршрут обучения</span>
+          <h2 class="section__title">Понятный путь из 4 шагов</h2>
+          <p class="section__lead">Каждый шаг — это уверенность и конкретный результат, а не просто теория.</p>
+        </header>
+
+        <ol class="roadmap">
+          <span class="roadmap__line" aria-hidden="true"></span>
+          <li class="road-step road-step--pink reveal">
+            <span class="road-step__num">1</span>
+            <h3>Разобраться</h3>
+            <p>Понять, что такое нейросети, какие бывают и зачем они тебе именно сейчас.</p>
+          </li>
+          <li class="road-step road-step--violet reveal">
+            <span class="road-step__num">2</span>
+            <h3>Научиться писать запросы</h3>
+            <p>Освоить промпты, чтобы получать от ИИ нужный результат с первого раза.</p>
+          </li>
+          <li class="road-step road-step--blue reveal">
+            <span class="road-step__num">3</span>
+            <h3>Создавать контент</h3>
+            <p>Тексты, фото, видео, презентации — всё, что нужно для блога и работы.</p>
+          </li>
+          <li class="road-step road-step--teal reveal">
+            <span class="road-step__num">4</span>
+            <h3>Применять в деле</h3>
+            <p>Использовать ИИ в жизни, работе, блоге и первых онлайн-услугах — без хаоса и лишнего страха.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== SKILLS ===================== -->
+    <section class="section ai-bg" id="inside">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="eyebrow">Что ты научишься делать</span>
+          <h2 class="section__title">Навыки, которые пригодятся сразу</h2>
+        </header>
+
+        <div class="skills">
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--pink"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9"/></svg></span>Тексты</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--violet"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h5"/></svg></span>Посты</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--peach"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 1 4 10.5c-.7.6-1 1-1 2H9c0-1-.3-1.4-1-2A6 6 0 0 1 12 3z"/></svg></span>Идеи</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--blue"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16l-5-5-7 7"/></svg></span>Изображения</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--teal"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M5 20c1.5-3 4-4.5 7-4.5s5.5 1.5 7 4.5"/></svg></span>Нейрофото</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--violet"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg></span>AI-видео</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--peach"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v3M8 20h8"/></svg></span>Презентации</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--pink"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></span>Песни</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--teal"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 14h4"/></svg></span>Карточки товаров</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--blue"><svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h0M15 13h0"/></svg></span>GPT-ассистенты</div>
+          <div class="skill reveal"><span class="skill__icon ic-grad ic-grad--ai"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4z"/><path d="M8 20h8M9 16v4M15 16v4"/></svg></span>Портфолио</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROGRAM ===================== -->
+    <section class="section section--tint ai-bg" id="program">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="eyebrow">Программа</span>
+          <h2 class="section__title">6 модулей — от основ до результата</h2>
+          <p class="section__lead">Нажми на модуль, чтобы посмотреть, что внутри.</p>
+        </header>
+
+        <div class="accordion" id="program-acc">
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__no">01</span>
+              <span class="acc-trigger__title">Знакомство с нейросетями</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Что такое ИИ простыми словами, какие сервисы существуют и как выбрать своё первое рабочее окружение.
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__no">02</span>
+              <span class="acc-trigger__title">Искусство запросов (промптинг)</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Как формулировать запросы, чтобы получать точный результат. Готовые шаблоны промптов под задачи.
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__no">03</span>
+              <span class="acc-trigger__title">Тексты и контент для блога</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Посты, сценарии, идеи, рубрики и контент-план — быстро и в твоём стиле.
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__no">04</span>
+              <span class="acc-trigger__title">Изображения, нейрофото и видео</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Создание визуала, аватаров, нейрофото и коротких AI-видео для соцсетей и работы.
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__no">05</span>
+              <span class="acc-trigger__title">AI-ассистенты и автоматизация</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Свои GPT-помощники, презентации и инструменты, которые экономят часы рутины.
+            </div></div>
+          </div>
+
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__no">06</span>
+              <span class="acc-trigger__title">Применение и монетизация</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Как превратить навыки в первые онлайн-услуги, портфолио и доход.
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AUTHOR ===================== -->
+    <section class="section" id="author">
+      <div class="container author">
+        <div class="author__media reveal">
+          <div class="author__glow" aria-hidden="true"></div>
+          <div class="author__photo">
+            <div class="author__photo-inner">
+              <img
+                class="author__img"
+                src="assets/julia-kopasova.png"
+                alt="Юлия Копасова — автор курса «База ИИ», в светлой ИИ-студии"
+                width="800" height="1000" loading="lazy" decoding="async"
+              />
+            </div>
+          </div>
+          <div class="author__badge">
+            <span class="ic-grad ic-grad--violet"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18 9l-4.2 1.3L12 15l-1.8-4.7L6 9l4.2-1.3z"/></svg></span>
+            Твой проводник в ИИ
+          </div>
+        </div>
+
+        <div class="author__copy reveal">
+          <span class="eyebrow">Автор</span>
+          <h2 class="section__title">Юлия Копасова — твой проводник в понятный ИИ</h2>
+          <p class="section__lead">
+            Эксперт по нейросетям и наставник. Объясняю ИИ простым языком, чтобы им мог
+            пользоваться каждый — без технического бэкграунда и страха перед новым.
+          </p>
+
+          <ul class="author__tags" aria-label="О Юлии">
+            <li class="author__tag">Эксперт по нейросетям</li>
+            <li class="author__tag">Наставник</li>
+            <li class="author__tag">Предприниматель</li>
+            <li class="author__tag">Автор онлайн-продуктов</li>
+          </ul>
+
+          <div class="facts">
+            <div class="fact reveal">
+              <span class="fact__num">111 000+</span>
+              <span class="fact__label">подписчиков в блоге</span>
+            </div>
+            <div class="fact reveal">
+              <span class="fact__num">2000+</span>
+              <span class="fact__label">учеников прошли обучение</span>
+            </div>
+          </div>
+
+          <p class="author__note">
+            <span class="author__note-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></svg></span>
+            Обучаю нейросетям простым языком — спокойно, по шагам и на практике.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PRICING ===================== -->
+    <section class="section section--tint" id="pricing">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="eyebrow">Доступ</span>
+          <h2 class="section__title">Получить доступ к Базе ИИ</h2>
+          <p class="section__lead">Один понятный доступ ко всем материалам, чтобы начать пользоваться нейросетями без хаоса и бесконечного поиска сервисов.</p>
+        </header>
+
+        <div class="offer reveal">
+          <div class="offer__glow" aria-hidden="true"></div>
+          <div class="offer__inner">
+
+            <div class="offer__main">
+              <span class="offer__badge">Полный доступ</span>
+              <h3 class="offer__name">База&nbsp;ИИ</h3>
+              <p class="offer__desc">Понятный старт в нейросетях для жизни, блога, работы и первых онлайн-услуг.</p>
+
+              <div class="offer__price">
+                <span class="offer__price-label">Полная стоимость</span>
+                <span class="offer__price-old">19 000 ₽</span>
+                <span class="offer__price-label offer__price-label--accent">Сейчас</span>
+                <span class="offer__price-now">4 500 ₽</span>
+                <span class="offer__price-tag">специальная цена</span>
+                <span class="offer__price-save">экономия 14 500 ₽</span>
+              </div>
+
+              <ul class="offer__quick">
+                <li>доступ на год</li>
+                <li>для новичков</li>
+                <li>все материалы внутри</li>
+              </ul>
+
+              <a href="#payment-soon" class="btn btn--primary btn--lg btn--block offer__cta is-disabled" id="offerCta" aria-disabled="true" tabindex="-1">Получить доступ за 4 500 ₽</a>
+
+              <div class="offer__consents" id="offerConsents">
+                <div class="offer-check">
+                  <input type="checkbox" class="offer-check__input" id="consentPrivacy" name="consent_privacy" />
+                  <label class="offer-check__label" for="consentPrivacy">
+                    <span class="offer-check__mark" aria-hidden="true"></span>
+                    <span class="offer-check__text">Я соглашаюсь с <a href="privacy.html" class="offer-check__link">политикой конфиденциальности</a> и даю <a href="consent.html" class="offer-check__link">согласие на обработку персональных данных</a></span>
+                  </label>
+                </div>
+                <div class="offer-check">
+                  <input type="checkbox" class="offer-check__input" id="consentOffer" name="consent_offer" />
+                  <label class="offer-check__label" for="consentOffer">
+                    <span class="offer-check__mark" aria-hidden="true"></span>
+                    <span class="offer-check__text">Я согласен с условиями <a href="offer.html" class="offer-check__link">договора оферты</a></span>
+                  </label>
+                </div>
+              </div>
+
+              <p class="offer__note">После оплаты вы получите доступ к материалам обучения.</p>
+            </div>
+
+            <div class="offer__features">
+              <span class="offer__features-title">Что входит</span>
+              <ul class="offer__list">
+                <li>Доступ к обучающим модулям</li>
+                <li>Короткие практические уроки</li>
+                <li>Инструкции по регистрации и работе с нейросетями</li>
+                <li>Готовые промпты</li>
+                <li>Подборки бесплатных и платных ИИ-сервисов</li>
+                <li>Текстовые нейросети</li>
+                <li>Визуальные нейросети</li>
+                <li>ИИ-видео и анимация</li>
+                <li>Презентации, музыка, голос и дополнительные инструменты</li>
+                <li>GPT-ассистенты и ИИ-помощники</li>
+                <li>Материалы для первых шагов в онлайн-услугах</li>
+                <li>Доступ на год</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section class="section" id="faq">
+      <div class="container container--narrow">
+        <header class="section__head reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="section__title">Частые вопросы</h2>
+        </header>
+
+        <div class="accordion" id="faq-acc">
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__title">Подойдёт ли курс, если я совсем новичок?</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Да, программа создана именно для новичков. Мы начинаем с самых основ и идём короткими понятными шагами.
+            </div></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__title">Нужен ли мощный компьютер?</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Нет. Учиться и применять инструменты можно прямо с телефона — всё работает онлайн.
+            </div></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__title">Сколько времени нужно на обучение?</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Уроки короткие, проходить можно в своём темпе. Доступ открыт на год, поэтому спешить не нужно.
+            </div></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__title">Все сервисы платные?</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Нет. Я показываю и бесплатные, и платные инструменты, чтобы ты могла выбрать удобный вариант.
+            </div></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__title">Получится ли зарабатывать с этими навыками?</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              В программе есть блок применения и монетизации — как превратить навыки в первые онлайн-услуги и доход.
+            </div></div>
+          </div>
+          <div class="acc-item reveal">
+            <button class="acc-trigger" aria-expanded="false">
+              <span class="acc-trigger__title">Как долго будет доступ?</span>
+              <span class="acc-trigger__icon" aria-hidden="true"></span>
+            </button>
+            <div class="acc-panel"><div class="acc-panel__inner">
+              Доступ к материалам открыт на год с момента покупки — можно возвращаться к урокам в любой момент.
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FINAL CTA ===================== -->
+    <section class="final-cta">
+      <div class="final-cta__glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="final-cta__card reveal">
+          <h2 class="final-cta__title">Начни с базы, а не с хаоса</h2>
+          <p class="final-cta__text">
+            Спокойный понятный старт в нейросетях — по шагам, на практике и простым языком.
+          </p>
+          <div class="final-cta__actions">
+            <a href="#pricing" class="btn btn--primary btn--lg">Начать обучение</a>
+            <a href="#program" class="btn btn--ghost btn--lg btn--on-grad">Посмотреть программу</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#top" class="logo logo--footer">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__text">База&nbsp;ИИ</span>
+      </a>
+      <p class="footer__copy">© <span id="year"></span> База ИИ · Юлия Копасова. Понятный старт в нейросетях.</p>
+      <nav class="footer__nav" aria-label="Навигация в подвале">
+        <a href="#audience">Для кого</a>
+        <a href="#inside">Что внутри</a>
+        <a href="#pricing">Тарифы</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <nav class="footer__legal" aria-label="Юридические документы">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <a href="offer.html">Договор оферты</a>
+        <a href="consent.html">Согласие на обработку персональных данных</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ===================== STICKY MOBILE CTA ===================== -->
+  <div class="sticky-cta" id="stickyCta">
+    <div class="sticky-cta__info">
+      <span class="sticky-cta__label">Доступ к Базе ИИ</span>
+      <span class="sticky-cta__price">4 500 ₽</span>
+    </div>
+    <a href="#pricing" class="btn btn--primary sticky-cta__btn">Получить доступ</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

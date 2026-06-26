@@ -1,0 +1,202 @@
+/* ============================================================
+   Юридические страницы — База ИИ
+   ============================================================ */
+
+.legal-page {
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.legal-header {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(106, 48, 255, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+}
+
+.legal-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.legal-main {
+  flex: 1;
+  padding: clamp(32px, 5vw, 56px) 0 clamp(48px, 6vw, 72px);
+}
+
+.container--legal {
+  max-width: 780px;
+}
+
+.legal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: clamp(24px, 4vw, 36px);
+  transition: color 0.2s ease;
+}
+
+.legal-back:hover {
+  color: var(--lavender);
+}
+
+.legal-title {
+  font-size: clamp(26px, 4.5vw, 38px);
+  line-height: 1.18;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0 0 clamp(28px, 4vw, 40px);
+  color: var(--text);
+}
+
+.legal-content {
+  font-size: clamp(15px, 1.5vw, 16px);
+  line-height: 1.72;
+  color: var(--text);
+}
+
+.legal-content > *:first-child {
+  margin-top: 0;
+}
+
+.legal-content p {
+  margin: 0 0 1em;
+  color: var(--text);
+}
+
+.legal-content h2 {
+  font-size: clamp(17px, 2.2vw, 20px);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin: 2em 0 0.75em;
+  color: var(--text);
+}
+
+.legal-content h2:first-child {
+  margin-top: 0;
+}
+
+.legal-content h3 {
+  font-size: clamp(16px, 1.8vw, 18px);
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 1.5em 0 0.6em;
+  color: var(--text);
+}
+
+.legal-content ul {
+  list-style: none;
+  margin: 0 0 1em;
+  padding: 0;
+}
+
+.legal-content ul li {
+  position: relative;
+  padding-left: 1.25em;
+  margin-bottom: 0.45em;
+  color: var(--text);
+}
+
+.legal-content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--grad-soft);
+}
+
+.legal-content a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-word;
+}
+
+.legal-content a:hover {
+  color: var(--lavender);
+}
+
+.legal-table-wrap {
+  overflow-x: auto;
+  margin: 1.25em 0 1.5em;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(106, 48, 255, 0.1);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(13px, 1.4vw, 14px);
+  line-height: 1.5;
+  min-width: 520px;
+}
+
+.legal-table th,
+.legal-table td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(106, 48, 255, 0.08);
+}
+
+.legal-table th {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  background: rgba(169, 116, 255, 0.06);
+}
+
+.legal-table tr:last-child td {
+  border-bottom: none;
+}
+
+.legal-table td {
+  color: var(--text);
+}
+
+.legal-footer .footer__inner {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.legal-footer .footer__nav {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 20px;
+}
+
+.legal-footer .footer__nav a {
+  font-size: 13px;
+}
+
+@media (max-width: 760px) {
+  .legal-header {
+    padding: 14px 0;
+  }
+
+  .legal-content {
+    line-height: 1.68;
+  }
+
+  .legal-table th,
+  .legal-table td {
+    padding: 10px 12px;
+  }
+}

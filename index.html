@@ -559,9 +559,9 @@
                 <span class="offer__price-label">Полная стоимость</span>
                 <span class="offer__price-old">19 000 ₽</span>
                 <span class="offer__price-label offer__price-label--accent">Сейчас</span>
-                <span class="offer__price-now">4 500 ₽</span>
+                <span class="offer__price-now" id="offerPriceNow">4 500 ₽</span>
                 <span class="offer__price-tag">специальная цена</span>
-                <span class="offer__price-save">экономия 14 500 ₽</span>
+                <span class="offer__price-save" id="offerPriceSave">экономия 14 500 ₽</span>
               </div>
 
               <ul class="offer__quick">
@@ -570,7 +570,29 @@
                 <li>все материалы внутри</li>
               </ul>
 
-              <a href="#payment-soon" class="btn btn--primary btn--lg btn--block offer__cta is-disabled" id="offerCta" aria-disabled="true" tabindex="-1">Получить доступ за 4 500 ₽</a>
+              <div class="offer__fields" id="offerFields">
+                <label class="offer-field">
+                  <span class="offer-field__label">Имя</span>
+                  <input type="text" class="offer-field__input" id="offerName" name="name" autocomplete="name" placeholder="Как к вам обращаться" />
+                </label>
+                <label class="offer-field">
+                  <span class="offer-field__label">Email <span class="offer-field__req" aria-hidden="true">*</span></span>
+                  <input type="email" class="offer-field__input" id="offerEmail" name="email" autocomplete="email" placeholder="name@mail.ru" required />
+                  <p class="offer-email__message" id="offerEmailMessage" role="alert" hidden></p>
+                </label>
+                <div class="offer-field">
+                  <span class="offer-field__label">Промокод</span>
+                  <div class="offer-promo">
+                    <input type="text" class="offer-field__input offer-promo__input" id="offerPromo" name="promo" autocomplete="off" placeholder="Необязательно" />
+                    <button type="button" class="offer-promo__apply" id="offerPromoApply">Применить</button>
+                  </div>
+                  <p class="offer-promo__message" id="offerPromoMessage" role="status" hidden></p>
+                </div>
+              </div>
+
+              <p class="offer__form-error" id="offerFormError" role="alert" hidden></p>
+
+              <button type="button" class="btn btn--primary btn--lg btn--block offer__cta is-disabled" id="offerCta" aria-disabled="true" disabled>Получить доступ за 4 500 ₽</button>
 
               <div class="offer__consents" id="offerConsents">
                 <div class="offer-check">
@@ -589,7 +611,7 @@
                 </div>
               </div>
 
-              <p class="offer__note">После оплаты вы получите доступ к материалам обучения.</p>
+              <p class="offer__note">После оплаты мы отправим доступ и инструкцию на указанный email.</p>
             </div>
 
             <div class="offer__features">
@@ -726,7 +748,7 @@
   <div class="sticky-cta" id="stickyCta">
     <div class="sticky-cta__info">
       <span class="sticky-cta__label">Доступ к Базе ИИ</span>
-      <span class="sticky-cta__price">4 500 ₽</span>
+      <span class="sticky-cta__price" id="stickyCtaPrice">4 500 ₽</span>
     </div>
     <a href="#pricing" class="btn btn--primary sticky-cta__btn">Получить доступ</a>
   </div>

@@ -186,6 +186,25 @@
   font-size: 13px;
 }
 
+.payment-result__actions {
+  margin-top: 24px;
+}
+
+.payment-result .btn {
+  margin-top: 8px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.payment-result .btn:hover {
+  color: #fff;
+}
+
+.payment-result__meta {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
 @media (max-width: 760px) {
   .legal-header {
     padding: 14px 0;

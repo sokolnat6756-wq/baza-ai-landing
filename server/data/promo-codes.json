@@ -1,0 +1,16 @@
+{
+  "BAZA500": {
+    "type": "fixed",
+    "value": 50000,
+    "active": true,
+    "maxUses": null,
+    "expiresAt": null
+  },
+  "START10": {
+    "type": "percent",
+    "value": 10,
+    "active": true,
+    "maxUses": null,
+    "expiresAt": null
+  }
+}

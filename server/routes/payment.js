@@ -2,8 +2,9 @@ const express = require("express");
 const crypto = require("crypto");
 const config = require("../config");
 const { validatePromo } = require("../services/promo");
-const { createOrder } = require("../services/orders");
+const { createOrder, updateOrderByOrderId } = require("../services/orders");
 const { isAllowedEmailDomain, DOMAIN_ERROR_MESSAGE } = require("../services/email-domains");
+const tbank = require("../services/tbank");
 
 const router = express.Router();
 
@@ -41,7 +42,7 @@ router.post("/promo/validate", function (req, res) {
   });
 });
 
-router.post("/payment/init", function (req, res) {
+router.post("/payment/init", async function (req, res) {
   const body = req.body || {};
   const name = String(body.name || "").trim();
   const email = String(body.email || "").trim().toLowerCase();
@@ -90,9 +91,62 @@ router.post("/payment/init", function (req, res) {
     });
   }
 
-  return res.status(501).json({
-    error: "Реальная оплата пока не подключена. Включите MOCK_PAYMENTS=true для тестирования.",
+  const order = {
+    orderId,
+    name,
+    email,
+    promoCode: promo.code || null,
+    amount: finalAmount,
+  };
+
+  const payment = await tbank.initPayment(order);
+
+  if (!payment.success) {
+    return res.status(502).json({ success: false, message: payment.message });
+  }
+
+  updateOrderByOrderId(orderId, { tbankPaymentId: payment.paymentId });
+
+  return res.json({
+    paymentUrl: payment.paymentUrl,
+    orderId,
+    amount: finalAmount,
   });
+});
+
+router.post("/payment/webhook", function (req, res) {
+  const body = req.body || {};
+
+  if (!tbank.verifyNotificationToken(body)) {
+    return res.status(403).send("Forbidden");
+  }
+
+  const orderId = body.OrderId;
+  const status = body.Status;
+  const success = body.Success === true;
+
+  if (orderId) {
+    if (success && (status === "CONFIRMED" || status === "AUTHORIZED")) {
+      const updated = updateOrderByOrderId(orderId, {
+        status: "paid",
+        paidAt: new Date().toISOString(),
+        tbankPaymentId: body.PaymentId,
+      });
+      if (!updated) {
+        console.warn("T-Bank webhook: заказ не найден:", orderId);
+      }
+    } else if (status === "REJECTED" || status === "CANCELED") {
+      const updated = updateOrderByOrderId(orderId, {
+        status: "failed",
+        tbankPaymentId: body.PaymentId,
+      });
+      if (!updated) {
+        console.warn("T-Bank webhook: заказ не найден:", orderId);
+      }
+    }
+  }
+
+  return res.status(200).send("OK");
 });
 
 module.exports = router;

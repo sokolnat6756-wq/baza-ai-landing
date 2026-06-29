@@ -28,4 +28,17 @@ function createOrder(data) {
   return order;
 }
 
-module.exports = { createOrder, readOrders };
+function updateOrderByOrderId(orderId, patch) {
+  const orders = readOrders();
+  const index = orders.findIndex(function (order) {
+    return order.orderId === orderId;
+  });
+
+  if (index === -1) return null;
+
+  orders[index] = { ...orders[index], ...patch };
+  writeOrders(orders);
+  return orders[index];
+}
+
+module.exports = { createOrder, readOrders, updateOrderByOrderId };

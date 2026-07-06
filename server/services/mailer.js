@@ -1,3 +1,4 @@
+const dns = require("dns").promises;
 const nodemailer = require("nodemailer");
 
 const SUBJECT = "Доступ к «Базе ИИ»";
@@ -18,15 +19,34 @@ function getMissingMailConfig() {
   return missing;
 }
 
-function createTransport() {
+async function createTransport() {
+  const smtpHost = process.env.SMTP_HOST;
+  let connectHost = smtpHost;
+
+  try {
+    const lookup = await dns.lookup(smtpHost, { family: 6 });
+    connectHost = lookup.address;
+  } catch (error) {
+    const message = error && error.message ? error.message : "IPv6 lookup failed";
+    console.warn(
+      "SMTP IPv6 lookup не удался для " + smtpHost + ", используется hostname: " + message
+    );
+  }
+
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
+    host: connectHost,
     port: Number(process.env.SMTP_PORT) || 465,
     secure: envBool("SMTP_SECURE", true),
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
+    tls: {
+      servername: smtpHost,
+    },
+    connectionTimeout: 20000,
+    greetingTimeout: 20000,
+    socketTimeout: 20000,
   });
 }
 
@@ -113,7 +133,7 @@ async function sendAccessEmail(order) {
     return { sent: false, reason: "no_email" };
   }
 
-  const transport = createTransport();
+  const transport = await createTransport();
 
   try {
     await transport.sendMail({

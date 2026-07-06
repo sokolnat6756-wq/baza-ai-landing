@@ -2,7 +2,14 @@ const express = require("express");
 const crypto = require("crypto");
 const config = require("../config");
 const { validatePromo } = require("../services/promo");
-const { createOrder, updateOrderByOrderId } = require("../services/orders");
+const {
+  createOrder,
+  getOrderByOrderId,
+  updateOrderByOrderId,
+  setAccessEmailSent,
+  setAccessEmailError,
+} = require("../services/orders");
+const { sendAccessEmail } = require("../services/mailer");
 const { isAllowedEmailDomain, DOMAIN_ERROR_MESSAGE } = require("../services/email-domains");
 const tbank = require("../services/tbank");
 
@@ -114,7 +121,24 @@ router.post("/payment/init", async function (req, res) {
   });
 });
 
-router.post("/payment/webhook", function (req, res) {
+async function trySendAccessEmail(orderId) {
+  const order = getOrderByOrderId(orderId);
+  if (!order) return;
+  if (order.accessEmailSentAt) return;
+
+  try {
+    const result = await sendAccessEmail(order);
+    if (result.sent) {
+      setAccessEmailSent(orderId);
+    }
+  } catch (error) {
+    const message = error && error.message ? error.message : "Ошибка отправки письма";
+    setAccessEmailError(orderId, message);
+    console.warn("Не удалось отправить письмо с доступом для заказа", orderId + ":", message);
+  }
+}
+
+router.post("/payment/webhook", async function (req, res) {
   const body = req.body || {};
 
   if (!tbank.verifyNotificationToken(body)) {
@@ -134,6 +158,8 @@ router.post("/payment/webhook", function (req, res) {
       });
       if (!updated) {
         console.warn("T-Bank webhook: заказ не найден:", orderId);
+      } else {
+        await trySendAccessEmail(orderId);
       }
     } else if (status === "REJECTED" || status === "CANCELED") {
       const updated = updateOrderByOrderId(orderId, {

@@ -28,6 +28,14 @@ function createOrder(data) {
   return order;
 }
 
+function getOrderByOrderId(orderId) {
+  return (
+    readOrders().find(function (order) {
+      return order.orderId === orderId;
+    }) || null
+  );
+}
+
 function updateOrderByOrderId(orderId, patch) {
   const orders = readOrders();
   const index = orders.findIndex(function (order) {
@@ -41,4 +49,24 @@ function updateOrderByOrderId(orderId, patch) {
   return orders[index];
 }
 
-module.exports = { createOrder, readOrders, updateOrderByOrderId };
+function setAccessEmailSent(orderId) {
+  return updateOrderByOrderId(orderId, {
+    accessEmailSentAt: new Date().toISOString(),
+    accessEmailError: undefined,
+  });
+}
+
+function setAccessEmailError(orderId, errorMessage) {
+  return updateOrderByOrderId(orderId, {
+    accessEmailError: String(errorMessage || "Ошибка отправки письма").slice(0, 500),
+  });
+}
+
+module.exports = {
+  createOrder,
+  readOrders,
+  getOrderByOrderId,
+  updateOrderByOrderId,
+  setAccessEmailSent,
+  setAccessEmailError,
+};

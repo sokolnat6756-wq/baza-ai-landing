@@ -50,25 +50,36 @@ async function createTransport() {
   });
 }
 
-function buildTextBody(name, telegramUrl, mailSupport) {
+const SUPPORT_EMAIL = "Y-kopasova@inbox.ru";
+const SUPPORT_TELEGRAM_HANDLE = "@digital_izba";
+const SUPPORT_TELEGRAM_URL = "https://t.me/digital_izba";
+
+function buildTextBody(name, telegramUrl) {
   return [
     `Здравствуйте, ${name}!`,
     "",
-    "Спасибо за оплату «Базы ИИ».",
+    "Спасибо за оплату и добро пожаловать в «Базу ИИ» ❤️",
+    "",
+    "Мы очень рады, что вы присоединились к обучению.",
     "",
     "Ваш доступ:",
     telegramUrl,
     "",
-    "Сохраните это письмо. Если возникнут вопросы, напишите нам: " + mailSupport,
+    "Сохраните это письмо.",
+    "",
+    "Если возникнут вопросы по доступу, напишите Юлии:",
+    SUPPORT_EMAIL,
+    "",
+    "или в Отдел заботы школы «Digital.izba»:",
+    SUPPORT_TELEGRAM_HANDLE,
     "",
     "С уважением,",
     "Юлия Копасова",
   ].join("\n");
 }
 
-function buildHtmlBody(name, telegramUrl, mailSupport) {
+function buildHtmlBody(name, telegramUrl) {
   const safeName = escapeHtml(name);
-  const safeSupport = escapeHtml(mailSupport);
 
   return [
     "<!DOCTYPE html>",
@@ -76,21 +87,29 @@ function buildHtmlBody(name, telegramUrl, mailSupport) {
     "<head>",
     "<meta charset=\"utf-8\">",
     "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
-    "<title>Доступ к Базе ИИ</title>",
+    "<title>Доступ к «Базе ИИ»</title>",
     "</head>",
     "<body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;color:#222;\">",
     "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"background:#f5f5f5;padding:24px 12px;\">",
     "<tr><td align=\"center\">",
     "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width:560px;background:#ffffff;border-radius:12px;padding:32px 28px;\">",
     "<tr><td>",
-    "<h1 style=\"margin:0 0 20px;font-size:24px;line-height:1.3;color:#111;\">Доступ к Базе ИИ</h1>",
+    "<h1 style=\"margin:0 0 20px;font-size:24px;line-height:1.3;color:#111;\">Доступ к «Базе ИИ»</h1>",
     `<p style=\"margin:0 0 16px;font-size:16px;line-height:1.6;\">Здравствуйте, ${safeName}!</p>`,
-    "<p style=\"margin:0 0 24px;font-size:16px;line-height:1.6;\">Спасибо за оплату «Базы ИИ».</p>",
+    "<p style=\"margin:0 0 16px;font-size:16px;line-height:1.6;\">Спасибо за оплату и добро пожаловать в «Базу ИИ» ❤️</p>",
+    "<p style=\"margin:0 0 24px;font-size:16px;line-height:1.6;\">Мы очень рады, что вы присоединились к обучению.</p>",
     "<p style=\"margin:0 0 20px;font-size:16px;line-height:1.6;\">Ваш доступ:</p>",
     "<p style=\"margin:0 0 28px;text-align:center;\">",
     `<a href=\"${escapeHtml(telegramUrl)}\" style=\"display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 28px;border-radius:8px;\">Перейти в Базу ИИ</a>`,
     "</p>",
-    `<p style=\"margin:0 0 24px;font-size:14px;line-height:1.6;color:#555;\">Сохраните это письмо. Если возникнут вопросы, напишите нам: <a href=\"mailto:${safeSupport}\" style=\"color:#2563eb;\">${safeSupport}</a></p>`,
+    "<p style=\"margin:0 0 16px;font-size:14px;line-height:1.6;color:#555;\">Сохраните это письмо.</p>",
+    "<p style=\"margin:0 0 24px;font-size:14px;line-height:1.6;color:#555;\">",
+    "Если возникнут вопросы по доступу, напишите Юлии: ",
+    `<a href=\"mailto:${SUPPORT_EMAIL}\" style=\"color:#2563eb;\">${SUPPORT_EMAIL}</a>`,
+    "<br>",
+    "или в Отдел заботы школы «Digital.izba»: ",
+    `<a href=\"${SUPPORT_TELEGRAM_URL}\" style=\"color:#2563eb;\">${SUPPORT_TELEGRAM_HANDLE}</a>`,
+    "</p>",
     "<p style=\"margin:0;font-size:16px;line-height:1.6;\">С уважением,<br>Юлия Копасова</p>",
     "</td></tr>",
     "</table>",
@@ -126,7 +145,6 @@ async function sendAccessEmail(order) {
   const name = String((order && order.name) || "клиент").trim() || "клиент";
   const email = String((order && order.email) || "").trim().toLowerCase();
   const telegramUrl = process.env.TELEGRAM_ACCESS_URL;
-  const mailSupport = process.env.MAIL_SUPPORT || process.env.MAIL_FROM;
 
   if (!email) {
     console.warn("Письмо с доступом не отправлено: у заказа не указан email");
@@ -140,8 +158,8 @@ async function sendAccessEmail(order) {
       from: process.env.MAIL_FROM,
       to: email,
       subject: SUBJECT,
-      text: buildTextBody(name, telegramUrl, mailSupport),
-      html: buildHtmlBody(name, telegramUrl, mailSupport),
+      text: buildTextBody(name, telegramUrl),
+      html: buildHtmlBody(name, telegramUrl),
     });
     return { sent: true };
   } catch (error) {

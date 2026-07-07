@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FAF8F4" />
+  <title>VIP-сопровождение — Нейромультфильмы и AI-видео</title>
+  <meta name="description" content="VIP-сопровождение по программе «Нейромультфильмы и AI-видео» — расширенный формат обучения с личным сопровождением." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFB347'/%3E%3Cstop offset='1' stop-color='%23FF8C00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='15' r='5' fill='white' opacity='0.9'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FAF8F4;
+      --card: #FFFFFF;
+      --text: #1D1D1F;
+      --text-2: #5F6470;
+      --gold: #D97706;
+      --gold-light: #FFB347;
+      --gold-dark: #B45309;
+      --gold-soft: #FFF7ED;
+      --border: rgba(217, 119, 6, 0.14);
+      --shadow: 0 24px 60px rgba(180, 83, 9, 0.12), 0 8px 24px rgba(29, 29, 31, 0.06);
+      --radius: 24px;
+      --radius-sm: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(80% 60% at 10% 0%, rgba(255, 179, 71, 0.18), transparent 55%),
+        radial-gradient(70% 50% at 100% 100%, rgba(255, 140, 0, 0.10), transparent 60%),
+        var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(24px, 5vw, 48px) 20px 56px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      margin-bottom: clamp(28px, 5vw, 40px);
+    }
+
+    .logo__mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--gold-light), #FF8C00);
+      box-shadow: 0 6px 16px rgba(217, 119, 6, 0.25);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 40px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FFB347, #FF8C00, #D97706);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--gold-soft);
+      color: var(--gold-dark);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .badge__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 5vw, 36px);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+      font-size: clamp(17px, 2.5vw, 20px);
+      font-weight: 600;
+      color: var(--gold-dark);
+    }
+
+    .price {
+      display: inline-block;
+      margin: 0 0 20px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 179, 71, 0.18), rgba(255, 140, 0, 0.12));
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 800;
+      color: var(--gold-dark);
+    }
+
+    .description {
+      margin: 0 0 24px;
+      color: var(--text-2);
+      font-size: 16px;
+    }
+
+    .features {
+      margin: 0 0 32px;
+      padding: 20px 22px;
+      background: var(--gold-soft);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(217, 119, 6, 0.12);
+    }
+
+    .features__title {
+      margin: 0 0 14px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .features ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .features li {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--text-2);
+    }
+
+    .features li:last-child { margin-bottom: 0; }
+
+    .features li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    }
+
+    .form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"] {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid rgba(29, 29, 31, 0.12);
+      border-radius: 12px;
+      font: inherit;
+      font-size: 16px;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus {
+      outline: none;
+      border-color: rgba(217, 119, 6, 0.45);
+      box-shadow: 0 0 0 4px rgba(255, 179, 71, 0.18);
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .checkbox input {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .checkbox a {
+      color: var(--gold-dark);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .form-error {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #FEF2F2;
+      color: #B91C1C;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .form-error.is-visible { display: block; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 14px;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #FFB347 0%, #FF8C00 48%, #D97706 100%);
+      box-shadow: 0 12px 28px rgba(217, 119, 6, 0.28);
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+
+    .btn:hover:not(:disabled) { transform: translateY(-1px); }
+
+    .btn:disabled,
+    .btn.is-disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn.is-loading { opacity: 0.75; }
+
+    @media (max-width: 480px) {
+      .card { padding: 24px 18px; }
+      .features { padding: 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a href="../index.html" class="logo" aria-label="База ИИ — на главную">
+      <span class="logo__mark" aria-hidden="true"></span>
+      <span>База&nbsp;ИИ</span>
+    </a>
+
+    <article class="card">
+      <span class="badge"><span class="badge__dot" aria-hidden="true"></span>VIP-формат</span>
+
+      <h1>VIP-сопровождение</h1>
+      <p class="subtitle">«Нейромультфильмы и AI-видео»</p>
+      <p class="price">90&nbsp;000&nbsp;₽</p>
+
+      <p class="description">
+        Расширенный формат обучения с личным сопровождением, разбором ваших проектов
+        и помощью с идеями, упаковкой и реализацией.
+      </p>
+
+      <div class="features">
+        <p class="features__title">Что входит:</p>
+        <ul>
+          <li>Всё из основного тарифа</li>
+          <li>Личное сопровождение в ваших проектах</li>
+          <li>Помощь с идеями, упаковкой и реализацией</li>
+          <li>Разбор ваших AI-видео и мультфильмов</li>
+          <li>Доступ к материалам курса на 1 год</li>
+          <li>Чат участников курса</li>
+        </ul>
+      </div>
+
+      <form class="form" id="vipForm" novalidate>
+        <div class="field">
+          <label for="vipName">Имя</label>
+          <input type="text" id="vipName" name="name" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="vipEmail">Email</label>
+          <input type="email" id="vipEmail" name="email" autocomplete="email" required />
+        </div>
+
+        <div class="field">
+          <label for="vipPhone">Телефон</label>
+          <input type="tel" id="vipPhone" name="phone" autocomplete="tel" required />
+        </div>
+
+        <label class="checkbox">
+          <input type="checkbox" id="consentPrivacy" name="consentPrivacy" required />
+          <span>Я согласен(на) с <a href="../privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a></span>
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox" id="consentOffer" name="consentOffer" required />
+          <span>Я принимаю условия <a href="../offer.html" target="_blank" rel="noopener">договора оферты</a></span>
+        </label>
+
+        <p class="form-error" id="formError" role="alert"></p>
+
+        <button type="submit" class="btn is-disabled" id="submitBtn" disabled>
+          Перейти к оплате 90&nbsp;000&nbsp;₽
+        </button>
+      </form>
+    </article>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById("vipForm");
+      var nameInput = document.getElementById("vipName");
+      var emailInput = document.getElementById("vipEmail");
+      var phoneInput = document.getElementById("vipPhone");
+      var consentPrivacy = document.getElementById("consentPrivacy");
+      var consentOffer = document.getElementById("consentOffer");
+      var submitBtn = document.getElementById("submitBtn");
+      var formError = document.getElementById("formError");
+      var btnLabel = "Перейти к оплате 90\u00a0000\u00a0₽";
+
+      var allowedDomains = ["mail.ru", "list.ru", "bk.ru", "inbox.ru", "yandex.ru"];
+      var domainErrorMessage =
+        "Для регистрации используйте почту mail.ru, list.ru, bk.ru, inbox.ru или yandex.ru";
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function hideError() {
+        formError.textContent = "";
+        formError.classList.remove("is-visible");
+      }
+
+      function showError(message) {
+        formError.textContent = message;
+        formError.classList.add("is-visible");
+      }
+
+      function normalizeEmail(value) {
+        return String(value || "").trim().toLowerCase();
+      }
+
+      function getEmailDomain(email) {
+        var at = email.lastIndexOf("@");
+        if (at < 0) return "";
+        return email.slice(at + 1);
+      }
+
+      function isAllowedEmailDomain(email) {
+        return allowedDomains.indexOf(getEmailDomain(email)) !== -1;
+      }
+
+      function isEmailDomainValid() {
+        var email = normalizeEmail(emailInput.value);
+        if (!email || !emailRe.test(email)) return false;
+        return isAllowedEmailDomain(email);
+      }
+
+      function updateEmailDomainFeedback() {
+        var email = normalizeEmail(emailInput.value);
+        if (!email) {
+          hideError();
+          return;
+        }
+        if (!emailRe.test(email)) {
+          hideError();
+          return;
+        }
+        if (!isAllowedEmailDomain(email)) {
+          showError(domainErrorMessage);
+          return;
+        }
+        hideError();
+      }
+
+      function isFormValid() {
+        return (
+          nameInput.value.trim().length > 0 &&
+          isEmailDomainValid() &&
+          phoneInput.value.trim().length > 0 &&
+          consentPrivacy.checked &&
+          consentOffer.checked &&
+          !submitBtn.classList.contains("is-loading")
+        );
+      }
+
+      function updateSubmitState() {
+        var enabled = isFormValid();
+        submitBtn.disabled = !enabled;
+        submitBtn.classList.toggle("is-disabled", !enabled);
+      }
+
+      form.addEventListener("input", function (event) {
+        if (event.target === emailInput) {
+          updateEmailDomainFeedback();
+        } else {
+          hideError();
+        }
+        updateSubmitState();
+      });
+
+      emailInput.addEventListener("blur", function () {
+        if (emailInput.value.trim()) {
+          emailInput.value = normalizeEmail(emailInput.value);
+        }
+        updateEmailDomainFeedback();
+        updateSubmitState();
+      });
+
+      form.addEventListener("change", updateSubmitState);
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        updateEmailDomainFeedback();
+        if (!isFormValid()) return;
+
+        hideError();
+
+        var payload = {
+          name: nameInput.value.trim(),
+          email: normalizeEmail(emailInput.value),
+          phone: phoneInput.value.trim(),
+          consentPrivacy: consentPrivacy.checked,
+          consentOffer: consentOffer.checked,
+        };
+
+        submitBtn.classList.add("is-loading");
+        submitBtn.textContent = "Подготовка оплаты…";
+        updateSubmitState();
+
+        try {
+          var response = await fetch("/api/video-vip/payment/init", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          var data = await response.json().catch(function () {
+            return {};
+          });
+
+          if (!response.ok) {
+            throw new Error(data.message || data.error || "Не удалось начать оплату. Попробуйте позже.");
+          }
+
+          if (data.paymentUrl) {
+            window.location.href = data.paymentUrl;
+            return;
+          }
+
+          throw new Error("Сервер не вернул ссылку на оплату.");
+        } catch (err) {
+          showError(err.message || "Ошибка соединения с сервером.");
+          submitBtn.classList.remove("is-loading");
+          submitBtn.textContent = btnLabel;
+          updateSubmitState();
+        }
+      });
+
+      if (new URLSearchParams(window.location.search).get("payment") === "fail") {
+        showError("Оплата не была завершена. Попробуйте ещё раз.");
+      }
+
+      updateSubmitState();
+    })();
+  </script>
+</body>
+</html>

@@ -97,8 +97,73 @@ async function initPayment(order) {
   }
 }
 
+async function initVideoVipPayment(order) {
+  const terminalKey = config.tbank.terminalKey;
+  const password = config.tbank.secretKey;
+  const apiUrl = config.tbank.apiUrl.replace(/\/$/, "");
+
+  if (!terminalKey || !password) {
+    return {
+      success: false,
+      message: "Платёжная система не настроена. Обратитесь к администратору.",
+    };
+  }
+
+  const payload = {
+    TerminalKey: terminalKey,
+    Amount: order.amount,
+    OrderId: order.orderId,
+    Description: "Нейромультфильмы и AI-видео — VIP-сопровождение",
+    SuccessURL: `${config.siteUrl}/video-vip/success/?orderId=${encodeURIComponent(order.orderId)}`,
+    FailURL: `${config.siteUrl}/video-vip/?payment=fail`,
+    NotificationURL: `${config.siteUrl}/api/video-vip/payment/webhook`,
+    DATA: {
+      email: order.email || "",
+      name: order.name || "",
+      phone: order.phone || "",
+      product: "video-vip",
+    },
+  };
+
+  payload.Token = generateToken(payload, password);
+
+  try {
+    const response = await fetch(`${apiUrl}/Init`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json().catch(function () {
+      return {};
+    });
+
+    if (data.Success === true && data.PaymentURL) {
+      return {
+        success: true,
+        paymentUrl: data.PaymentURL,
+        paymentId: data.PaymentId,
+      };
+    }
+
+    const bankMessage = data.Message || data.Details;
+    const message = bankMessage
+      ? `Не удалось создать платёж: ${bankMessage}`
+      : "Не удалось создать платёж. Попробуйте позже.";
+
+    return { success: false, message: message };
+  } catch (err) {
+    console.error("T-Bank VIP Init error:", err.message);
+    return {
+      success: false,
+      message: "Не удалось связаться с платёжной системой. Попробуйте позже.",
+    };
+  }
+}
+
 module.exports = {
   generateToken,
   initPayment,
+  initVideoVipPayment,
   verifyNotificationToken,
 };

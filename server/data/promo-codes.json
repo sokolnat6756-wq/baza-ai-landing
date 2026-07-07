@@ -1,14 +1,7 @@
 {
-  "BAZA500": {
+  "BOOM": {
     "type": "fixed",
-    "value": 50000,
-    "active": true,
-    "maxUses": null,
-    "expiresAt": null
-  },
-  "START10": {
-    "type": "percent",
-    "value": 10,
+    "value": 100000,
     "active": true,
     "maxUses": null,
     "expiresAt": null

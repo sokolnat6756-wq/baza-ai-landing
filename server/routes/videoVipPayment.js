@@ -10,6 +10,7 @@ const {
   setAccessEmailError,
 } = require("../services/videoVipOrders");
 const { sendVideoVipAccessEmail, sendVideoVipAdminNotification } = require("../services/videoVipMailer");
+const { sendPaymentToGoogleSheets } = require("../services/googleSheets");
 
 const router = express.Router();
 
@@ -71,6 +72,41 @@ async function trySendAdminNotification(orderId) {
     });
     console.warn(
       "Не удалось отправить VIP-уведомление администратору для заказа",
+      orderId + ":",
+      message
+    );
+  }
+}
+
+async function trySendToGoogleSheets(orderId) {
+  const order = getOrderByOrderId(orderId);
+  if (!order) return;
+  if (order.googleSheetsSentAt) return;
+
+  try {
+    const result = await sendPaymentToGoogleSheets({
+      date: order.paidAt,
+      product: "Нейромультфильмы и AI-видео",
+      tariff: "VIP-сопровождение",
+      name: order.name,
+      email: order.email,
+      phone: order.phone || "",
+      amount: order.amount / 100,
+      promoCode: "",
+    });
+    if (result.sent) {
+      updateOrderByOrderId(orderId, {
+        googleSheetsSentAt: new Date().toISOString(),
+        googleSheetsError: undefined,
+      });
+    }
+  } catch (error) {
+    const message = error && error.message ? error.message : "Ошибка отправки в Google Таблицу";
+    updateOrderByOrderId(orderId, {
+      googleSheetsError: String(message).slice(0, 500),
+    });
+    console.warn(
+      "Не удалось отправить VIP-оплату в Google Таблицу для заказа",
       orderId + ":",
       message
     );
@@ -175,6 +211,7 @@ router.post("/webhook", async function (req, res) {
       } else {
         await trySendAccessEmail(orderId);
         await trySendAdminNotification(orderId);
+        await trySendToGoogleSheets(orderId);
       }
     } else if (status === "REJECTED" || status === "CANCELED") {
       const updated = updateOrderByOrderId(orderId, {

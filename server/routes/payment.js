@@ -10,6 +10,7 @@ const {
   setAccessEmailError,
 } = require("../services/orders");
 const { sendAccessEmail } = require("../services/mailer");
+const { sendPaymentToGoogleSheets } = require("../services/googleSheets");
 const { isAllowedEmailDomain, DOMAIN_ERROR_MESSAGE } = require("../services/email-domains");
 const tbank = require("../services/tbank");
 
@@ -138,6 +139,41 @@ async function trySendAccessEmail(orderId) {
   }
 }
 
+async function trySendToGoogleSheets(orderId) {
+  const order = getOrderByOrderId(orderId);
+  if (!order) return;
+  if (order.googleSheetsSentAt) return;
+
+  try {
+    const result = await sendPaymentToGoogleSheets({
+      date: order.paidAt,
+      product: "База ИИ",
+      tariff: "База ИИ",
+      name: order.name,
+      email: order.email,
+      phone: "",
+      amount: order.amount / 100,
+      promoCode: order.promoCode || "",
+    });
+    if (result.sent) {
+      updateOrderByOrderId(orderId, {
+        googleSheetsSentAt: new Date().toISOString(),
+        googleSheetsError: undefined,
+      });
+    }
+  } catch (error) {
+    const message = error && error.message ? error.message : "Ошибка отправки в Google Таблицу";
+    updateOrderByOrderId(orderId, {
+      googleSheetsError: String(message).slice(0, 500),
+    });
+    console.warn(
+      "Не удалось отправить оплату в Google Таблицу для заказа",
+      orderId + ":",
+      message
+    );
+  }
+}
+
 router.post("/payment/webhook", async function (req, res) {
   const body = req.body || {};
 
@@ -160,6 +196,7 @@ router.post("/payment/webhook", async function (req, res) {
         console.warn("T-Bank webhook: заказ не найден:", orderId);
       } else {
         await trySendAccessEmail(orderId);
+        await trySendToGoogleSheets(orderId);
       }
     } else if (status === "REJECTED" || status === "CANCELED") {
       const updated = updateOrderByOrderId(orderId, {

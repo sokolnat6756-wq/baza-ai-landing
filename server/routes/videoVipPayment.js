@@ -9,7 +9,7 @@ const {
   setAccessEmailSent,
   setAccessEmailError,
 } = require("../services/videoVipOrders");
-const { sendVideoVipAccessEmail } = require("../services/videoVipMailer");
+const { sendVideoVipAccessEmail, sendVideoVipAdminNotification } = require("../services/videoVipMailer");
 
 const router = express.Router();
 
@@ -48,6 +48,32 @@ async function trySendAccessEmail(orderId) {
     const message = error && error.message ? error.message : "Ошибка отправки письма";
     setAccessEmailError(orderId, message);
     console.warn("Не удалось отправить VIP-письмо для заказа", orderId + ":", message);
+  }
+}
+
+async function trySendAdminNotification(orderId) {
+  const order = getOrderByOrderId(orderId);
+  if (!order) return;
+  if (order.adminNotificationSentAt) return;
+
+  try {
+    const result = await sendVideoVipAdminNotification(order);
+    if (result.sent) {
+      updateOrderByOrderId(orderId, {
+        adminNotificationSentAt: new Date().toISOString(),
+        adminNotificationError: undefined,
+      });
+    }
+  } catch (error) {
+    const message = error && error.message ? error.message : "Ошибка отправки уведомления";
+    updateOrderByOrderId(orderId, {
+      adminNotificationError: String(message).slice(0, 500),
+    });
+    console.warn(
+      "Не удалось отправить VIP-уведомление администратору для заказа",
+      orderId + ":",
+      message
+    );
   }
 }
 
@@ -148,6 +174,7 @@ router.post("/webhook", async function (req, res) {
         console.warn("T-Bank VIP webhook: заказ не найден:", orderId);
       } else {
         await trySendAccessEmail(orderId);
+        await trySendAdminNotification(orderId);
       }
     } else if (status === "REJECTED" || status === "CANCELED") {
       const updated = updateOrderByOrderId(orderId, {

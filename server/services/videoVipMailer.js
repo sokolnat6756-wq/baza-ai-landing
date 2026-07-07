@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 
 const SUBJECT =
   "Добро пожаловать в VIP-сопровождение «Нейромультфильмы и AI-видео»";
+const ADMIN_SUBJECT = "Новая VIP-оплата — Нейромультфильмы и AI-видео";
 
 const SUPPORT_EMAIL = "Y-kopasova@inbox.ru";
 const SUPPORT_TELEGRAM_HANDLE = "@digital_izba";
@@ -12,6 +13,15 @@ function envBool(name, fallback) {
   const raw = process.env[name];
   if (raw === undefined || raw === "") return fallback;
   return raw === "true" || raw === "1";
+}
+
+function getMissingSmtpConfig() {
+  const missing = [];
+  if (!process.env.SMTP_HOST) missing.push("SMTP_HOST");
+  if (!process.env.SMTP_USER) missing.push("SMTP_USER");
+  if (!process.env.SMTP_PASS) missing.push("SMTP_PASS");
+  if (!process.env.MAIL_FROM) missing.push("MAIL_FROM");
+  return missing;
 }
 
 function getMissingMailConfig() {
@@ -54,6 +64,101 @@ async function createTransport() {
     greetingTimeout: 20000,
     socketTimeout: 20000,
   });
+}
+
+function getAdminEmail() {
+  const configured = String(process.env.VIDEO_VIP_ADMIN_EMAIL || "").trim();
+  return configured || SUPPORT_EMAIL;
+}
+
+function formatAmountRub(amountKopecks) {
+  const rubles = Math.round(Number(amountKopecks || 0) / 100);
+  return rubles.toLocaleString("ru-RU") + " \u20BD";
+}
+
+function formatPaidAt(paidAt) {
+  if (!paidAt) return "—";
+  const date = new Date(paidAt);
+  if (Number.isNaN(date.getTime())) return String(paidAt);
+  return date.toLocaleString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function buildAdminTextBody(order) {
+  const name = String(order.name || "—");
+  const email = String(order.email || "—");
+  const phone = String(order.phone || "—");
+  const orderId = String(order.orderId || "—");
+  const paidAt = formatPaidAt(order.paidAt);
+  const amount = formatAmountRub(order.amount);
+
+  return [
+    "Поступила новая оплата VIP-сопровождения.",
+    "",
+    "Имя: " + name,
+    "Email: " + email,
+    "Телефон: " + phone,
+    "Сумма: " + amount,
+    "Order ID: " + orderId,
+    "Дата оплаты: " + paidAt,
+    "",
+    "Что сделать:",
+    "1. Проверить оплату в Т-Бизнесе.",
+    "2. Связаться с учеником.",
+    "3. Подключить ученика к VIP-сопровождению.",
+  ].join("\n");
+}
+
+function buildAdminHtmlBody(order) {
+  const name = escapeHtml(order.name || "—");
+  const email = escapeHtml(order.email || "—");
+  const phone = escapeHtml(order.phone || "—");
+  const orderId = escapeHtml(order.orderId || "—");
+  const paidAt = escapeHtml(formatPaidAt(order.paidAt));
+  const amount = escapeHtml(formatAmountRub(order.amount));
+
+  return [
+    "<!DOCTYPE html>",
+    "<html lang=\"ru\">",
+    "<head>",
+    "<meta charset=\"utf-8\">",
+    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+    "<title>Новая VIP-оплата</title>",
+    "</head>",
+    "<body style=\"margin:0;padding:0;background:#f5f0e8;font-family:Arial,Helvetica,sans-serif;color:#222;\">",
+    "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"background:#f5f0e8;padding:24px 12px;\">",
+    "<tr><td align=\"center\">",
+    "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"max-width:560px;background:#ffffff;border-radius:14px;padding:28px 24px;border:1px solid #f0e0c8;\">",
+    "<tr><td>",
+    "<h1 style=\"margin:0 0 8px;font-size:22px;line-height:1.35;color:#111;\">Новая VIP-оплата</h1>",
+    "<p style=\"margin:0 0 20px;font-size:15px;line-height:1.5;color:#b8860b;font-weight:600;\">Нейромультфильмы и AI-видео</p>",
+    "<p style=\"margin:0 0 20px;font-size:16px;line-height:1.6;\">Поступила новая оплата VIP-сопровождения.</p>",
+    "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"background:#fff7ed;border:1px solid #f0e0c8;border-radius:12px;padding:18px 20px;margin:0 0 24px;\">",
+    "<tr><td style=\"padding:6px 0;font-size:15px;line-height:1.6;\"><strong>Имя:</strong> " + name + "</td></tr>",
+    "<tr><td style=\"padding:6px 0;font-size:15px;line-height:1.6;\"><strong>Email:</strong> " + email + "</td></tr>",
+    "<tr><td style=\"padding:6px 0;font-size:15px;line-height:1.6;\"><strong>Телефон:</strong> " + phone + "</td></tr>",
+    "<tr><td style=\"padding:6px 0;font-size:15px;line-height:1.6;\"><strong>Сумма:</strong> " + amount + "</td></tr>",
+    "<tr><td style=\"padding:6px 0;font-size:15px;line-height:1.6;\"><strong>Order ID:</strong> " + orderId + "</td></tr>",
+    "<tr><td style=\"padding:6px 0;font-size:15px;line-height:1.6;\"><strong>Дата оплаты:</strong> " + paidAt + "</td></tr>",
+    "</table>",
+    "<p style=\"margin:0 0 12px;font-size:15px;line-height:1.6;font-weight:700;\">Что сделать:</p>",
+    "<ol style=\"margin:0;padding-left:20px;font-size:15px;line-height:1.7;color:#444;\">",
+    "<li>Проверить оплату в Т-Бизнесе.</li>",
+    "<li>Связаться с учеником.</li>",
+    "<li>Подключить ученика к VIP-сопровождению.</li>",
+    "</ol>",
+    "</td></tr>",
+    "</table>",
+    "</td></tr>",
+    "</table>",
+    "</body>",
+    "</html>",
+  ].join("");
 }
 
 function buildTextBody(name, courseUrl, chatUrl) {
@@ -190,4 +295,30 @@ async function sendVideoVipAccessEmail(order) {
   }
 }
 
-module.exports = { sendVideoVipAccessEmail };
+async function sendVideoVipAdminNotification(order) {
+  const missing = getMissingSmtpConfig();
+  if (missing.length > 0) {
+    console.warn(
+      "VIP-уведомление администратору не отправлено: не заполнены настройки — " +
+        missing.join(", ")
+    );
+    return { sent: false, reason: "not_configured" };
+  }
+
+  const transport = await createTransport();
+
+  try {
+    await transport.sendMail({
+      from: process.env.MAIL_FROM,
+      to: getAdminEmail(),
+      subject: ADMIN_SUBJECT,
+      text: buildAdminTextBody(order),
+      html: buildAdminHtmlBody(order),
+    });
+    return { sent: true };
+  } catch (error) {
+    throw new Error(safeErrorMessage(error));
+  }
+}
+
+module.exports = { sendVideoVipAccessEmail, sendVideoVipAdminNotification };

@@ -1535,6 +1535,20 @@ button.offer__cta:disabled {
   background: var(--grad-soft);
 }
 
+.partner-program__subtitle {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.partner-program__note {
+  margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
 .partner-program__examples {
   margin: 0 0 28px;
   padding: 18px 20px;

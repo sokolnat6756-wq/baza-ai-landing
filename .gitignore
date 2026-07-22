@@ -2,6 +2,7 @@ node_modules/
 .env
 server/data/orders.json
 server/data/video-vip-orders.json
+server/data/partners.json
 *.log
 *.sqlite
 .DS_Store

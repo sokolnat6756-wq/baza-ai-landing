@@ -112,6 +112,18 @@
     updateSticky();
   }
 
+  /* ---------- Партнёрская ссылка из URL ---------- */
+  (function savePartnerRefFromUrl() {
+    try {
+      const ref = new URLSearchParams(window.location.search).get("ref");
+      if (ref) {
+        localStorage.setItem("partnerRef", ref.trim().toUpperCase());
+      }
+    } catch (_err) {
+      /* ignore */
+    }
+  })();
+
   /* ---------- Согласия и оплата ---------- */
   const offerCta = document.getElementById("offerCta");
   const consentPrivacy = document.getElementById("consentPrivacy");
@@ -138,7 +150,7 @@
   ]);
   const EMAIL_DOMAIN_HINT =
     "Укажите email на mail.ru, yandex.ru, inbox.ru, list.ru или bk.ru — на него придёт доступ к обучению.";
-  const BASE_AMOUNT = 450000;
+  const BASE_AMOUNT = 349000;
   const LIST_PRICE = 19000;
 
   let appliedPromoCode = "";
@@ -323,6 +335,7 @@
       name: offerName ? offerName.value.trim() : "",
       email: normalizeEmail(offerEmail.value),
       promoCode: appliedPromoCode,
+      partnerCode: localStorage.getItem("partnerRef") || "",
       consentPrivacy: consentPrivacy.checked,
       consentOffer: consentOffer.checked,
     };

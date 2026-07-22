@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FAF8F4" />
+  <title>Партнёрская программа — База ИИ</title>
+  <meta name="description" content="Получите персональную реферальную ссылку и зарабатывайте 10% с каждой оплаченной покупки «Базы ИИ»." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF3D77'/%3E%3Cstop offset='0.5' stop-color='%23A974FF'/%3E%3Cstop offset='1' stop-color='%232F7DFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='15' r='5' fill='white' opacity='0.9'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .partners-page {
+      min-height: 100vh;
+      padding: clamp(24px, 5vw, 48px) 20px 56px;
+      background:
+        radial-gradient(70% 60% at 10% 0%, rgba(169,116,255,0.12), transparent 55%),
+        radial-gradient(60% 50% at 100% 100%, rgba(47,125,255,0.08), transparent 60%),
+        var(--bg);
+    }
+
+    .partners-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .partners-back {
+      display: inline-flex;
+      margin-bottom: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+
+    .partners-back:hover { color: var(--lavender); }
+
+    .partners-card {
+      background: var(--card);
+      border: 1px solid rgba(106, 48, 255, 0.10);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 40px);
+    }
+
+    .partners-card h1 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 5vw, 36px);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .partners-card__lead {
+      margin: 0 0 28px;
+      color: var(--text-2);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .partners-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .partners-field label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .partners-field input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid rgba(29, 29, 31, 0.12);
+      border-radius: 12px;
+      font: inherit;
+      font-size: 16px;
+      background: #fff;
+    }
+
+    .partners-field input:focus {
+      outline: none;
+      border-color: rgba(169, 116, 255, 0.45);
+      box-shadow: 0 0 0 4px rgba(169, 116, 255, 0.14);
+    }
+
+    .partners-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+
+    .partners-check input {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--lavender);
+      flex-shrink: 0;
+    }
+
+    .partners-check a {
+      color: var(--lavender);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .partners-error {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #FEF2F2;
+      color: #B91C1C;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .partners-error.is-visible { display: block; }
+
+    .partners-result {
+      display: none;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(106, 48, 255, 0.10);
+    }
+
+    .partners-result.is-visible { display: block; }
+
+    .partners-result h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .partners-result p {
+      margin: 0 0 16px;
+      color: var(--text-2);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .partners-link-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: stretch;
+      margin-bottom: 8px;
+    }
+
+    .partners-link {
+      flex: 1 1 220px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(239, 230, 255, 0.55);
+      border: 1px solid rgba(106, 48, 255, 0.12);
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: break-all;
+      color: var(--text);
+    }
+
+    .partners-copy {
+      flex: 0 0 auto;
+      min-width: 160px;
+    }
+
+    .partners-copy.is-copied {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <div class="partners-page">
+    <div class="partners-wrap">
+      <a href="../index.html" class="partners-back">← На главную</a>
+
+      <article class="partners-card">
+        <h1>Партнёрская программа</h1>
+        <p class="partners-card__lead">
+          Заполните форму, чтобы получить персональную реферальную ссылку на «Базу ИИ».
+          Вы будете получать 10% с каждой оплаченной покупки по вашей ссылке.
+        </p>
+
+        <form class="partners-form" id="partnerForm" novalidate>
+          <div class="partners-field">
+            <label for="partnerName">Имя</label>
+            <input type="text" id="partnerName" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="partners-field">
+            <label for="partnerEmail">Email</label>
+            <input type="email" id="partnerEmail" name="email" autocomplete="email" required />
+          </div>
+
+          <div class="partners-field">
+            <label for="partnerTelegram">Telegram <span style="font-weight:400;color:var(--text-2)">(необязательно)</span></label>
+            <input type="text" id="partnerTelegram" name="telegram" autocomplete="off" placeholder="@username" />
+          </div>
+
+          <label class="partners-check">
+            <input type="checkbox" id="partnerConsentPrivacy" required />
+            <span>Я соглашаюсь с <a href="../privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a></span>
+          </label>
+
+          <p class="partners-error" id="partnerFormError" role="alert"></p>
+
+          <button type="submit" class="btn btn--primary btn--lg btn--block is-disabled" id="partnerSubmit" disabled>
+            Получить партнёрскую ссылку
+          </button>
+        </form>
+
+        <div class="partners-result" id="partnerResult">
+          <h2>Ваша партнёрская ссылка</h2>
+          <p>Делитесь этой ссылкой с аудиторией. После оплаты заказ будет закреплён за вами.</p>
+          <div class="partners-link-box">
+            <div class="partners-link" id="partnerReferralUrl"></div>
+            <button type="button" class="btn btn--ghost partners-copy" id="partnerCopyBtn">Скопировать ссылку</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById("partnerForm");
+      var nameInput = document.getElementById("partnerName");
+      var emailInput = document.getElementById("partnerEmail");
+      var telegramInput = document.getElementById("partnerTelegram");
+      var consentPrivacy = document.getElementById("partnerConsentPrivacy");
+      var submitBtn = document.getElementById("partnerSubmit");
+      var formError = document.getElementById("partnerFormError");
+      var resultBlock = document.getElementById("partnerResult");
+      var referralUrlEl = document.getElementById("partnerReferralUrl");
+      var copyBtn = document.getElementById("partnerCopyBtn");
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var referralUrl = "";
+
+      function hideError() {
+        formError.textContent = "";
+        formError.classList.remove("is-visible");
+      }
+
+      function showError(message) {
+        formError.textContent = message;
+        formError.classList.add("is-visible");
+      }
+
+      function isFormValid() {
+        return (
+          nameInput.value.trim().length > 0 &&
+          emailRe.test(emailInput.value.trim()) &&
+          consentPrivacy.checked &&
+          !submitBtn.classList.contains("is-loading")
+        );
+      }
+
+      function updateSubmitState() {
+        var enabled = isFormValid();
+        submitBtn.disabled = !enabled;
+        submitBtn.classList.toggle("is-disabled", !enabled);
+      }
+
+      form.addEventListener("input", function () {
+        hideError();
+        updateSubmitState();
+      });
+
+      form.addEventListener("change", updateSubmitState);
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        if (!isFormValid()) return;
+
+        hideError();
+        submitBtn.classList.add("is-loading");
+        submitBtn.textContent = "Создаём ссылку…";
+        updateSubmitState();
+
+        try {
+          var response = await fetch("/api/partners/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: nameInput.value.trim(),
+              email: emailInput.value.trim().toLowerCase(),
+              telegram: telegramInput.value.trim(),
+              consentPrivacy: consentPrivacy.checked,
+            }),
+          });
+
+          var data = await response.json().catch(function () {
+            return {};
+          });
+
+          if (!response.ok || !data.ok) {
+            throw new Error(data.message || "Не удалось создать партнёрскую ссылку.");
+          }
+
+          referralUrl = data.referralUrl || "";
+          referralUrlEl.textContent = referralUrl;
+          resultBlock.classList.add("is-visible");
+          resultBlock.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } catch (err) {
+          showError(err.message || "Ошибка соединения с сервером.");
+        } finally {
+          submitBtn.classList.remove("is-loading");
+          submitBtn.textContent = "Получить партнёрскую ссылку";
+          updateSubmitState();
+        }
+      });
+
+      copyBtn.addEventListener("click", async function () {
+        if (!referralUrl) return;
+
+        try {
+          await navigator.clipboard.writeText(referralUrl);
+          copyBtn.textContent = "Скопировано";
+          copyBtn.classList.add("is-copied");
+          setTimeout(function () {
+            copyBtn.textContent = "Скопировать ссылку";
+            copyBtn.classList.remove("is-copied");
+          }, 2000);
+        } catch (_err) {
+          window.prompt("Скопируйте ссылку:", referralUrl);
+        }
+      });
+
+      updateSubmitState();
+    })();
+  </script>
+</body>
+</html>

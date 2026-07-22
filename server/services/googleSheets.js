@@ -21,6 +21,8 @@ async function sendPaymentToGoogleSheets(payload) {
     phone: payload.phone || "",
     amount: payload.amount,
     promoCode: payload.promoCode || "",
+    partner: payload.partner != null ? payload.partner : "",
+    partnerReward: payload.partnerReward != null ? payload.partnerReward : "",
   };
 
   try {

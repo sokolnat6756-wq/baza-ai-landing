@@ -93,6 +93,8 @@ async function trySendToGoogleSheets(orderId) {
       phone: order.phone || "",
       amount: order.amount / 100,
       promoCode: "",
+      partner: "",
+      partnerReward: "",
     });
     if (result.sent) {
       updateOrderByOrderId(orderId, {

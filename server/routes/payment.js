@@ -11,6 +11,7 @@ const {
 } = require("../services/orders");
 const { sendAccessEmail } = require("../services/mailer");
 const { sendPaymentToGoogleSheets } = require("../services/googleSheets");
+const { findPartnerByCode } = require("../services/partners");
 const { isAllowedEmailDomain, DOMAIN_ERROR_MESSAGE } = require("../services/email-domains");
 const tbank = require("../services/tbank");
 
@@ -55,6 +56,7 @@ router.post("/payment/init", async function (req, res) {
   const name = String(body.name || "").trim();
   const email = String(body.email || "").trim().toLowerCase();
   const promoCode = String(body.promoCode || "").trim();
+  const partnerCodeInput = String(body.partnerCode || "").trim().toUpperCase();
   const consentPrivacy = Boolean(body.consentPrivacy);
   const consentOffer = Boolean(body.consentOffer);
 
@@ -78,7 +80,7 @@ router.post("/payment/init", async function (req, res) {
   const orderId = crypto.randomUUID();
   const finalAmount = promo.finalAmount;
 
-  createOrder({
+  const orderData = {
     orderId,
     name,
     email,
@@ -87,7 +89,19 @@ router.post("/payment/init", async function (req, res) {
     baseAmount: config.basePrice,
     status: config.mockPayments ? "paid_mock" : "pending",
     mock: config.mockPayments,
-  });
+  };
+
+  if (partnerCodeInput) {
+    const partner = findPartnerByCode(partnerCodeInput);
+    if (partner) {
+      orderData.partnerCode = partner.code;
+      orderData.partnerName = partner.name;
+      orderData.partnerEmail = partner.email;
+      orderData.partnerTelegram = partner.telegram || "";
+    }
+  }
+
+  createOrder(orderData);
 
   if (config.mockPayments) {
     const paymentUrl = `${config.siteUrl}/payment-success.html?orderId=${encodeURIComponent(orderId)}`;
@@ -154,6 +168,11 @@ async function trySendToGoogleSheets(orderId) {
       phone: "",
       amount: order.amount / 100,
       promoCode: order.promoCode || "",
+      partner: order.partnerCode || "",
+      partnerReward:
+        order.partnerReward != null && order.partnerCode
+          ? order.partnerReward / 100
+          : "",
     });
     if (result.sent) {
       updateOrderByOrderId(orderId, {
@@ -187,11 +206,20 @@ router.post("/payment/webhook", async function (req, res) {
 
   if (orderId) {
     if (success && (status === "CONFIRMED" || status === "AUTHORIZED")) {
-      const updated = updateOrderByOrderId(orderId, {
+      const existing = getOrderByOrderId(orderId);
+      const paidPatch = {
         status: "paid",
         paidAt: new Date().toISOString(),
         tbankPaymentId: body.PaymentId,
-      });
+      };
+
+      if (existing && existing.partnerCode && existing.amount) {
+        paidPatch.partnerReward = Math.round(
+          existing.amount * config.partnerCommissionPercent / 100
+        );
+      }
+
+      const updated = updateOrderByOrderId(orderId, paidPatch);
       if (!updated) {
         console.warn("T-Bank webhook: заказ не найден:", orderId);
       } else {

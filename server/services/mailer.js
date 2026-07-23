@@ -51,7 +51,6 @@ async function createTransport() {
 }
 
 const SUPPORT_EMAIL = "Y-kopasova@inbox.ru";
-const SUPPORT_TELEGRAM_HANDLE = "@digital_izba";
 const SUPPORT_TELEGRAM_URL = "https://t.me/digital_izba";
 const VK_ACCESS_URL = "https://vk.ru/baza_ii";
 
@@ -85,8 +84,7 @@ function buildTextBody(name, telegramUrl) {
     "Если возникнут вопросы по доступу, напишите Юлии:",
     SUPPORT_EMAIL,
     "",
-    "или в Отдел заботы школы «Digital.izba»:",
-    SUPPORT_TELEGRAM_HANDLE,
+    "Служба заботы: " + SUPPORT_TELEGRAM_URL,
     "",
     "С уважением,",
     "Юлия Копасова",
@@ -137,8 +135,8 @@ function buildHtmlBody(name, telegramUrl) {
     "Если возникнут вопросы по доступу, напишите Юлии: ",
     `<a href=\"mailto:${SUPPORT_EMAIL}\" style=\"color:#2563eb;\">${SUPPORT_EMAIL}</a>`,
     "<br>",
-    "или в Отдел заботы школы «Digital.izba»: ",
-    `<a href=\"${SUPPORT_TELEGRAM_URL}\" style=\"color:#2563eb;\">${SUPPORT_TELEGRAM_HANDLE}</a>`,
+    "Служба заботы: ",
+    `<a href=\"${SUPPORT_TELEGRAM_URL}\" style=\"color:#2563eb;\">${SUPPORT_TELEGRAM_URL}</a>`,
     "</p>",
     "<p style=\"margin:0;font-size:16px;line-height:1.6;\">С уважением,<br>Юлия Копасова</p>",
     "</td></tr>",

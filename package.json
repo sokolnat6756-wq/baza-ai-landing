@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node server/index.js",
-    "dev": "node --watch server/index.js"
+    "dev": "node --watch server/index.js",
+    "partners:report": "node server/scripts/partners-report.js"
   },
   "engines": {
     "node": ">=18"

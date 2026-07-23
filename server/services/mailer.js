@@ -53,6 +53,7 @@ async function createTransport() {
 const SUPPORT_EMAIL = "Y-kopasova@inbox.ru";
 const SUPPORT_TELEGRAM_HANDLE = "@digital_izba";
 const SUPPORT_TELEGRAM_URL = "https://t.me/digital_izba";
+const VK_ACCESS_URL = "https://vk.ru/baza_ii";
 
 function buildTextBody(name, telegramUrl) {
   return [
@@ -62,8 +63,22 @@ function buildTextBody(name, telegramUrl) {
     "",
     "Мы очень рады, что вы присоединились к обучению.",
     "",
-    "Ваш доступ:",
+    "Ваш доступ к урокам:",
+    "",
+    "Telegram-канал:",
     telegramUrl,
+    "",
+    "Группа во ВКонтакте:",
+    VK_ACCESS_URL,
+    "",
+    "Теперь материалы «Базы ИИ» доступны в двух местах: в Telegram и во ВКонтакте.",
+    "",
+    "Чтобы присоединиться к группе во ВКонтакте:",
+    "1. Перейдите по ссылке и отправьте запрос на вступление.",
+    "2. Напишите в сообщения группы email, по которому была произведена оплата.",
+    "3. Менеджер проверит оплату и добавит вас.",
+    "",
+    "После входа в группу посмотрите закреплённый пост «Как, что и где искать».",
     "",
     "Сохраните это письмо.",
     "",
@@ -80,6 +95,8 @@ function buildTextBody(name, telegramUrl) {
 
 function buildHtmlBody(name, telegramUrl) {
   const safeName = escapeHtml(name);
+  const safeTelegramUrl = escapeHtml(telegramUrl);
+  const safeVkUrl = escapeHtml(VK_ACCESS_URL);
 
   return [
     "<!DOCTYPE html>",
@@ -98,10 +115,23 @@ function buildHtmlBody(name, telegramUrl) {
     `<p style=\"margin:0 0 16px;font-size:16px;line-height:1.6;\">Здравствуйте, ${safeName}!</p>`,
     "<p style=\"margin:0 0 16px;font-size:16px;line-height:1.6;\">Спасибо за оплату и добро пожаловать в «Базу ИИ» ❤️</p>",
     "<p style=\"margin:0 0 24px;font-size:16px;line-height:1.6;\">Мы очень рады, что вы присоединились к обучению.</p>",
-    "<p style=\"margin:0 0 20px;font-size:16px;line-height:1.6;\">Ваш доступ:</p>",
-    "<p style=\"margin:0 0 28px;text-align:center;\">",
-    `<a href=\"${escapeHtml(telegramUrl)}\" style=\"display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 28px;border-radius:8px;\">Перейти в Базу ИИ</a>`,
+    "<p style=\"margin:0 0 16px;font-size:16px;line-height:1.6;font-weight:600;\">Ваш доступ к урокам:</p>",
+    "<p style=\"margin:0 0 10px;font-size:15px;line-height:1.6;color:#555;\">Telegram-канал:</p>",
+    "<p style=\"margin:0 0 20px;text-align:center;\">",
+    `<a href=\"${safeTelegramUrl}\" style=\"display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 28px;border-radius:8px;\">Перейти в Telegram</a>`,
     "</p>",
+    "<p style=\"margin:0 0 10px;font-size:15px;line-height:1.6;color:#555;\">Группа во ВКонтакте:</p>",
+    "<p style=\"margin:0 0 24px;text-align:center;\">",
+    `<a href=\"${safeVkUrl}\" style=\"display:inline-block;background:#4a76a8;color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 28px;border-radius:8px;\">Перейти во ВКонтакте</a>`,
+    "</p>",
+    "<p style=\"margin:0 0 16px;font-size:15px;line-height:1.6;\">Теперь материалы «Базы ИИ» доступны в двух местах: в Telegram и во ВКонтакте.</p>",
+    "<p style=\"margin:0 0 8px;font-size:15px;line-height:1.6;font-weight:600;\">Чтобы присоединиться к группе во ВКонтакте:</p>",
+    "<ol style=\"margin:0 0 16px;padding-left:20px;font-size:15px;line-height:1.7;color:#444;\">",
+    "<li>Перейдите по ссылке и отправьте запрос на вступление.</li>",
+    "<li>Напишите в сообщения группы email, по которому была произведена оплата.</li>",
+    "<li>Менеджер проверит оплату и добавит вас.</li>",
+    "</ol>",
+    "<p style=\"margin:0 0 20px;font-size:15px;line-height:1.6;color:#555;\">После входа в группу посмотрите закреплённый пост «Как, что и где искать».</p>",
     "<p style=\"margin:0 0 16px;font-size:14px;line-height:1.6;color:#555;\">Сохраните это письмо.</p>",
     "<p style=\"margin:0 0 24px;font-size:14px;line-height:1.6;color:#555;\">",
     "Если возникнут вопросы по доступу, напишите Юлии: ",

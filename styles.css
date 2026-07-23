@@ -1205,6 +1205,33 @@ button.offer__cta:disabled {
 
 .footer__legal a:hover { color: var(--text); }
 
+.footer__requisites {
+  width: 100%;
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(106, 48, 255, 0.06);
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.footer__requisites p { margin: 0; }
+
+.footer__requisites-title {
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.footer__requisites a {
+  color: var(--text-2);
+  text-decoration: underline;
+  text-decoration-color: rgba(106, 48, 255, 0.25);
+  transition: color .2s ease;
+}
+
+.footer__requisites a:hover { color: var(--text); }
+
 /* --- Правая колонка --- */
 .offer__features {
   padding: clamp(28px, 4vw, 44px);

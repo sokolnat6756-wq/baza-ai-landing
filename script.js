@@ -83,9 +83,17 @@
   /* ---------- Липкая мобильная кнопка покупки ---------- */
   const stickyCta = document.getElementById("stickyCta");
   const pricing = document.getElementById("pricing");
+  const finalCta = document.querySelector(".final-cta");
+  const footer = document.querySelector("footer.footer");
 
   if (stickyCta) {
     let ticking = false;
+
+    function isInView(el) {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    }
 
     function updateSticky() {
       ticking = false;
@@ -93,13 +101,12 @@
       const scrolled = window.scrollY > window.innerHeight * 0.6;
 
       // Прячем, когда секция тарифов на экране (чтобы не дублировать)
-      let pricingVisible = false;
-      if (pricing) {
-        const r = pricing.getBoundingClientRect();
-        pricingVisible = r.top < window.innerHeight && r.bottom > 0;
-      }
+      const pricingVisible = isInView(pricing);
 
-      stickyCta.classList.toggle("is-visible", scrolled && !pricingVisible);
+      // Прячем на финальном CTA и footer (чтобы не дублировать / не перекрывать)
+      const endVisible = isInView(finalCta) || isInView(footer);
+
+      stickyCta.classList.toggle("is-visible", scrolled && !pricingVisible && !endVisible);
     }
 
     window.addEventListener("scroll", function () {
@@ -421,4 +428,60 @@
     updatePriceUI(BASE_AMOUNT);
     updateOfferCta();
   }
+
+  /* ---------- Hero typewriter (только декоративная строка) ---------- */
+  (function initHeroTypewriter() {
+    const textEl = document.getElementById("heroTypewriterText");
+    if (!textEl) return;
+
+    const phrases = [
+      "создавать фото",
+      "делать видео",
+      "писать тексты",
+      "создавать музыку",
+      "работать с ИИ-помощниками"
+    ];
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    textEl.textContent = phrases[0];
+    if (reduceMotion) return;
+
+    const typingSpeed = 65;
+    const deletingSpeed = 40;
+    const pauseDuration = 1500;
+    let phraseIndex = 0;
+    let charIndex = phrases[0].length;
+    let deleting = false;
+
+    function tick() {
+      const current = phrases[phraseIndex];
+
+      if (!deleting) {
+        if (charIndex < current.length) {
+          charIndex += 1;
+          textEl.textContent = current.slice(0, charIndex);
+          window.setTimeout(tick, typingSpeed);
+          return;
+        }
+        window.setTimeout(function () {
+          deleting = true;
+          tick();
+        }, pauseDuration);
+        return;
+      }
+
+      if (charIndex > 0) {
+        charIndex -= 1;
+        textEl.textContent = current.slice(0, charIndex);
+        window.setTimeout(tick, deletingSpeed);
+        return;
+      }
+
+      deleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      window.setTimeout(tick, typingSpeed);
+    }
+
+    window.setTimeout(tick, pauseDuration);
+  })();
 })();

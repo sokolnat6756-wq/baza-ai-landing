@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#FAF8F4" />
+  <meta name="theme-color" content="#3A1B72" />
   <title>Партнёрская программа — База ИИ</title>
   <meta name="description" content="Получите персональную реферальную ссылку и зарабатывайте 10% с каждой оплаченной покупки «Базы ИИ»." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF3D77'/%3E%3Cstop offset='0.5' stop-color='%23A974FF'/%3E%3Cstop offset='1' stop-color='%232F7DFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='15' r='5' fill='white' opacity='0.9'/%3E%3C/svg%3E" />
@@ -13,50 +13,205 @@
   <link rel="stylesheet" href="../styles.css" />
   <style>
     .partners-page {
+      --pp-deep: #2B1250;
+      --pp-violet: #4E2A8E;
+      --pp-lilac: #C98BC4;
+      --pp-pink: #FF4FA8;
+      --pp-blue: #7DA0FF;
+      position: relative;
       min-height: 100vh;
-      padding: clamp(24px, 5vw, 48px) 20px 56px;
+      overflow: hidden;
+      isolation: isolate;
+      padding: clamp(24px, 4vw, 40px) 20px clamp(48px, 7vw, 72px);
       background:
-        radial-gradient(70% 60% at 10% 0%, rgba(169,116,255,0.12), transparent 55%),
-        radial-gradient(60% 50% at 100% 100%, rgba(47,125,255,0.08), transparent 60%),
-        var(--bg);
+        radial-gradient(54% 46% at 8% 4%, rgba(255, 79, 168, 0.28), transparent 62%),
+        radial-gradient(48% 42% at 96% 8%, rgba(125, 160, 255, 0.24), transparent 64%),
+        radial-gradient(56% 48% at 70% 100%, rgba(201, 139, 196, 0.22), transparent 66%),
+        linear-gradient(165deg, #200E42 0%, #35186A 32%, #4B2390 62%, #63339E 100%);
+      color: #fff;
+    }
+
+    .partners-page__glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .partners-page__glow--1 {
+      width: min(420px, 70%);
+      height: min(340px, 48%);
+      top: -10%;
+      left: -12%;
+      background: radial-gradient(circle, rgba(255, 79, 168, 0.28), transparent 70%);
+    }
+    .partners-page__glow--2 {
+      width: min(380px, 62%);
+      height: min(300px, 42%);
+      bottom: 8%;
+      right: -10%;
+      background: radial-gradient(circle, rgba(125, 160, 255, 0.24), transparent 70%);
     }
 
     .partners-wrap {
-      max-width: 640px;
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
       margin: 0 auto;
     }
 
     .partners-back {
       display: inline-flex;
-      margin-bottom: 28px;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: clamp(24px, 4vw, 36px);
       font-size: 14px;
       font-weight: 600;
-      color: var(--text-2);
+      color: rgba(255, 255, 255, 0.72);
+      transition: color .2s ease;
+    }
+    .partners-back:hover { color: #fff; }
+
+    .partners-hero {
+      margin-bottom: clamp(28px, 4vw, 40px);
     }
 
-    .partners-back:hover { color: var(--lavender); }
+    .partners-eyebrow {
+      display: inline-block;
+      margin: 0 0 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: linear-gradient(100deg, #FF9BD9 0%, #E3B8FF 55%, #9FD0FF 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .partners-title {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 5.2vw, 46px);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .partners-title-accent {
+      background: linear-gradient(100deg, #FF8FCE 0%, #D9A6FF 50%, #8FB4FF 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .partners-accent {
+      font-weight: 800;
+      background: linear-gradient(100deg, #FF8FCE 0%, #D9A6FF 50%, #8FB4FF 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .partners-lead {
+      margin: 0;
+      max-width: 34em;
+      font-size: clamp(15px, 1.8vw, 17px);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .partners-how {
+      margin-bottom: clamp(24px, 3.5vw, 36px);
+    }
+
+    .partners-how__title {
+      margin: 0 0 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.58);
+    }
+
+    .partners-steps {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0;
+    }
+
+    .partners-step {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: baseline;
+      padding: 14px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .partners-step:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .partners-step__no {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: rgba(255, 214, 242, 0.7);
+    }
+
+    .partners-step__text {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .partners-note {
+      margin: 16px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .partners-cta-wrap {
+      margin: clamp(22px, 3vw, 28px) 0 clamp(28px, 4vw, 40px);
+    }
+
+    .partners-cta {
+      display: inline-flex;
+      min-height: 52px;
+      box-shadow: 0 18px 40px rgba(255, 79, 168, 0.32), 0 8px 18px rgba(106, 48, 255, 0.22);
+    }
 
     .partners-card {
-      background: var(--card);
-      border: 1px solid rgba(106, 48, 255, 0.10);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      padding: clamp(28px, 5vw, 40px);
+      position: relative;
+      scroll-margin-top: 24px;
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(252, 247, 255, 0.94) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 28px;
+      box-shadow: 0 36px 80px rgba(18, 6, 42, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: clamp(24px, 4vw, 36px);
+      color: var(--text);
     }
 
-    .partners-card h1 {
-      margin: 0 0 12px;
-      font-size: clamp(28px, 5vw, 36px);
-      line-height: 1.15;
+    .partners-card__heading {
+      margin: 0 0 6px;
+      font-size: clamp(20px, 3vw, 24px);
       font-weight: 800;
       letter-spacing: -0.02em;
+      color: var(--text);
     }
 
     .partners-card__lead {
-      margin: 0 0 28px;
+      margin: 0 0 22px;
       color: var(--text-2);
-      font-size: 16px;
-      line-height: 1.65;
+      font-size: 15px;
+      line-height: 1.55;
     }
 
     .partners-form {
@@ -67,24 +222,33 @@
     .partners-field label {
       display: block;
       margin-bottom: 6px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
+      color: var(--text-2);
     }
 
     .partners-field input {
       width: 100%;
-      padding: 14px 16px;
-      border: 1px solid rgba(29, 29, 31, 0.12);
-      border-radius: 12px;
+      padding: 13px 16px;
+      border: 1.5px solid rgba(106, 48, 255, 0.14);
+      border-radius: 14px;
       font: inherit;
-      font-size: 16px;
-      background: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: inset 0 1px 2px rgba(29, 29, 31, 0.03);
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .partners-field input::placeholder {
+      color: rgba(95, 100, 112, 0.65);
     }
 
     .partners-field input:focus {
       outline: none;
-      border-color: rgba(169, 116, 255, 0.45);
-      box-shadow: 0 0 0 4px rgba(169, 116, 255, 0.14);
+      border-color: rgba(169, 116, 255, 0.55);
+      box-shadow: 0 0 0 3px rgba(169, 116, 255, 0.12);
     }
 
     .partners-check {
@@ -135,6 +299,7 @@
       margin: 0 0 12px;
       font-size: 22px;
       font-weight: 800;
+      color: var(--text);
     }
 
     .partners-result p {
@@ -172,20 +337,74 @@
     .partners-copy.is-copied {
       opacity: 0.85;
     }
+
+    @media (max-width: 480px) {
+      .partners-cta {
+        width: 100%;
+        justify-content: center;
+      }
+      .partners-step {
+        grid-template-columns: 36px minmax(0, 1fr);
+        gap: 10px;
+        padding: 12px 0;
+      }
+      .partners-step__text { font-size: 14px; }
+      .partners-card { border-radius: 22px; padding: 22px 18px; }
+    }
   </style>
 </head>
 <body>
   <div class="partners-page">
+    <div class="partners-page__glow partners-page__glow--1" aria-hidden="true"></div>
+    <div class="partners-page__glow partners-page__glow--2" aria-hidden="true"></div>
+
     <div class="partners-wrap">
       <a href="../index.html" class="partners-back">← На главную</a>
 
-      <article class="partners-card">
-        <h1>Партнёрская программа «Базы ИИ»</h1>
-        <p class="partners-card__lead">
-          Зарегистрируйтесь как партнёр и получите персональную ссылку. Делитесь ею со своей аудиторией и получайте 10% с каждой оплаченной покупки.
+      <header class="partners-hero">
+        <p class="partners-eyebrow">Для блогеров, экспертов и авторов</p>
+        <h1 class="partners-title">
+          Партнёрская программа<br />
+          <span class="partners-title-accent">«Базы ИИ»</span>
+        </h1>
+        <p class="partners-lead">
+          Рекомендуйте «Базу ИИ» своей аудитории и получайте <span class="partners-accent">10%</span> с каждой оплаченной покупки.
         </p>
+      </header>
+
+      <section class="partners-how" aria-labelledby="partners-how-title">
+        <h2 class="partners-how__title" id="partners-how-title">Как это работает</h2>
+        <ol class="partners-steps">
+          <li class="partners-step">
+            <span class="partners-step__no">01</span>
+            <p class="partners-step__text">Получаете персональную реферальную ссылку</p>
+          </li>
+          <li class="partners-step">
+            <span class="partners-step__no">02</span>
+            <p class="partners-step__text">Делитесь ссылкой с аудиторией или клиентами</p>
+          </li>
+          <li class="partners-step">
+            <span class="partners-step__no">03</span>
+            <p class="partners-step__text">После оплаты покупатель закрепляется за вами</p>
+          </li>
+          <li class="partners-step">
+            <span class="partners-step__no">04</span>
+            <p class="partners-step__text">Получаете <span class="partners-accent">10%</span> от фактически оплаченной суммы</p>
+          </li>
+        </ol>
+        <p class="partners-note">
+          Партнёрское вознаграждение фиксируется автоматически после подтверждения оплаты.
+        </p>
+      </section>
+
+      <div class="partners-cta-wrap">
+        <a href="#partnerForm" class="btn btn--primary btn--lg partners-cta">Стать партнёром</a>
+      </div>
+
+      <article class="partners-card">
+        <h2 class="partners-card__heading">Регистрация партнёра</h2>
         <p class="partners-card__lead">
-          Вознаграждение рассчитывается от фактически оплаченной суммы и фиксируется после подтверждения оплаты.
+          Заполните форму и получите персональную реферальную ссылку.
         </p>
 
         <form class="partners-form" id="partnerForm" novalidate>

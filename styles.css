@@ -607,10 +607,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   top: 4%;
   left: 6%;
   border-radius: 34px;
-  background:
-    radial-gradient(circle at 44% 24%, rgba(255, 232, 246, 0.95) 0%, rgba(255, 196, 230, 0.4) 16%, transparent 34%),
-    radial-gradient(circle at 60% 66%, rgba(201, 121, 198, 0.55), transparent 44%),
-    linear-gradient(165deg, #EFCEF3 0%, #FF8FCB 26%, #9357C8 58%, #4B2A80 100%);
+  background: #3A1B68;
   transform: rotate(var(--tilt));
   z-index: 3;
   animation: hero-float 7.5s ease-in-out infinite;
@@ -3759,9 +3756,9 @@ button.offer__cta:disabled {
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__actions .btn { width: 100%; flex: none; }
   .hero-collage { aspect-ratio: 0.92 / 1; max-height: none; }
-  .hero-collage__img--main { object-position: 50% 14%; }
-  .hero-collage__img--portrait { object-position: 50% 18%; }
-  .hero-collage__img--macro { object-position: 50% 40%; }
+  .hero-collage__img--main { object-position: 50% 28%; }
+  .hero-collage__img--portrait { object-position: 50% 50%; }
+  .hero-collage__img--macro { object-position: 50% 58%; }
   .hero-label { font-size: 9.5px; padding: 5px 9px; }
   .hero-label--1 { left: 2px; }
   .hero-label--4 { right: 2px; }

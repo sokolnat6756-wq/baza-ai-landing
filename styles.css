@@ -673,8 +673,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .hero-label--1 { top: 10%; left: -2%; transform: rotate(-5deg); color: #FFD0EA; }
 .hero-label--2 { top: -6%; right: 16%; transform: rotate(4deg); color: #C9D4FF; }
 .hero-label--3 { bottom: 4%; left: 22%; transform: rotate(-3deg); color: #C8F0FF; }
-.hero-label--4 { top: 44%; right: -3%; transform: rotate(6deg); color: #FFFFFF; }
-.hero-label--5 { bottom: -3%; left: 6%; transform: rotate(-4deg); color: #FFE1B8; }
+.hero-label--4 {
+  top: auto;
+  left: auto;
+  /*
+    main-photo: left 6%, top 4%, width 66%, height 84% → right edge at 72% (right: 28%).
+    ChatGPT: top 10% (= 4% + 6% inset), left -2% (= 8% past left edge at 6%).
+    Mirror: 6% inset from bottom → bottom: 12% + 6% = 18%;
+            8% past right edge → right: 28% - 8% = 20%.
+    ≈ 35–45% of pill outside to the right; does NOT cross bottom edge.
+  */
+  bottom: 18%;
+  right: 20%;
+  transform: rotate(-3deg);
+  color: #FFFFFF;
+}
 
 @keyframes hero-float {
   0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
@@ -3761,7 +3774,13 @@ button.offer__cta:disabled {
   .hero-collage__img--macro { object-position: 50% 58%; }
   .hero-label { font-size: 9.5px; padding: 5px 9px; }
   .hero-label--1 { left: 2px; }
-  .hero-label--4 { right: 2px; }
+  .hero-label--4 {
+    /* same right-edge mirror; ChatGPT mobile left: 2px slightly reduces overhang */
+    bottom: 17%;
+    right: 18%;
+    top: auto;
+    left: auto;
+  }
 
   .why-now__panel { padding: 24px 20px; border-radius: 22px; }
   .why-now__points { gap: 16px; }

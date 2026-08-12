@@ -484,4 +484,66 @@
 
     window.setTimeout(tick, pauseDuration);
   })();
+
+  /* ---------- Showcase «ИИ-ВИДЕО»: Safari/iOS autoplay ---------- */
+  (function initShowcaseVideoAutoplay() {
+    const videos = document.querySelectorAll(".showcase-card__video");
+    if (!videos.length) return;
+
+    const reduceMotionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduceMotionMq.matches) return;
+
+    function tryPlay(video) {
+      if (reduceMotionMq.matches) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () {});
+      }
+    }
+
+    videos.forEach(function (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "");
+
+      function onReadyOnce() {
+        tryPlay(video);
+      }
+      video.addEventListener("loadeddata", onReadyOnce, { once: true });
+      video.addEventListener("canplay", onReadyOnce, { once: true });
+      if (video.readyState >= 2) onReadyOnce();
+    });
+
+    if (!("IntersectionObserver" in window)) {
+      videos.forEach(tryPlay);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          const video = entry.target;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+            tryPlay(video);
+          } else if (!entry.isIntersecting) {
+            video.pause();
+          }
+        });
+      },
+      {
+        /* viewport: works for page scroll + horizontal carousel swipe into view */
+        root: null,
+        threshold: [0, 0.35, 0.5, 0.75]
+      }
+    );
+
+    videos.forEach(function (video) {
+      io.observe(video);
+    });
+  })();
 })();

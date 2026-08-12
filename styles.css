@@ -1414,15 +1414,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .showcase-card__img {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: block;
   width: 100%;
   height: 100%;
+  max-width: none;
+  max-height: none;
   object-fit: cover;
   border: 0;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
+  transform: none;
+  -webkit-transform: none;
+  /* Pixels already upright; prevent iOS Safari EXIF/from-image reorientation */
+  image-orientation: none;
 }
 .showcase-card__img--photo {
   object-position: 50% 18%;
@@ -3898,6 +3907,23 @@ button.offer__cta:disabled {
   .showcase-card--f { width: 60vw; aspect-ratio: 4 / 5; }
   .showcase-card--g { width: 80vw; min-height: 170px; }
   .showcase-card--g .showcase-card__body { padding: 18px 20px; }
+  .showcase-card--has-photo .showcase-card__img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    transform: none;
+    -webkit-transform: none;
+    rotate: none;
+    scale: none;
+    image-orientation: none;
+  }
   .showcase-card__img--photo { object-position: 48% 16%; }
   .showcase-card__img--creative { object-position: 50% 26%; }
 }

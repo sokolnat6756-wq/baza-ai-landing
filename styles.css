@@ -2790,6 +2790,11 @@ button.offer__cta:disabled {
 }
 
 .offer-installment__btn {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -2801,9 +2806,14 @@ button.offer__cta:disabled {
   padding-right: 14px;
 }
 
+.offer-installment__label {
+  display: inline;
+  text-align: center;
+}
+
 .offer-installment__btn small {
-  display: block;
-  margin-top: 4px;
+  display: inline;
+  margin-top: 0;
   font-size: 12px;
   font-weight: 500;
   opacity: 0.8;
@@ -3669,7 +3679,9 @@ button.offer__cta:disabled {
   .footer { padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }
 
   .offer-installment__btn {
+    display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
     gap: 2px;
@@ -3678,9 +3690,21 @@ button.offer__cta:disabled {
     font-size: 14px;
     font-weight: 800;
     line-height: 1.2;
+    white-space: normal;
+  }
+
+  .offer-installment__label {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-align: center;
+    max-width: 100%;
   }
 
   .offer-installment__btn small {
+    display: block;
     margin-top: 0;
     font-size: 11px;
     font-weight: 500;

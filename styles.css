@@ -1439,6 +1439,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .showcase-card__img--creative {
   object-position: 52% 28%;
 }
+.showcase-card__img--music {
+  object-position: 50% 45%;
+}
+.showcase-card__img--assist {
+  object-position: 52% 50%;
+}
+.showcase-card__img--content {
+  object-position: 50% 43%;
+}
+.showcase-card__img--business {
+  object-position: 50% 42%;
+}
 .showcase-card__video,
 .showcase-card__video-poster {
   position: absolute;
@@ -1484,6 +1496,54 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       transparent 32%,
       rgba(70, 28, 120, 0.34) 62%,
       rgba(28, 10, 60, 0.74) 100%
+    );
+}
+.showcase-card--d.showcase-card--has-photo .showcase-card__media::after {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(36, 15, 82, 0.05) 0%,
+      transparent 34%,
+      rgba(58, 27, 122, 0.28) 62%,
+      rgba(28, 10, 60, 0.76) 100%
+    );
+}
+.showcase-card--c.showcase-card--has-photo .showcase-card__media::after {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(90, 48, 80, 0.08) 0%,
+      transparent 32%,
+      rgba(70, 36, 90, 0.26) 60%,
+      rgba(36, 14, 52, 0.78) 100%
+    );
+}
+.showcase-card--e.showcase-card--has-photo .showcase-card__media::after {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 36%,
+      rgba(90, 60, 150, 0.28) 64%,
+      rgba(28, 10, 60, 0.78) 100%
+    );
+}
+.showcase-card--g.showcase-card--has-photo .showcase-card__media::after {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(120, 78, 175, 0.36) 0%,
+      rgba(181, 111, 180, 0.2) 18%,
+      rgba(181, 111, 180, 0.08) 34%,
+      transparent 48%,
+      transparent 58%,
+      rgba(46, 20, 90, 0.28) 72%,
+      rgba(28, 10, 60, 0.72) 100%
+    ),
+    radial-gradient(
+      58% 80% at 8% 50%,
+      rgba(120, 78, 175, 0.22),
+      transparent 70%
     );
 }
 .showcase-card--has-video .showcase-card__media::after {
@@ -1552,9 +1612,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .showcase-card--a .showcase-card__caption,
 .showcase-card--b .showcase-card__caption { font-size: 14px; }
 
-.showcase-card--g { flex-direction: row; align-items: center; }
-.showcase-card--g .showcase-card__body { flex-direction: row; align-items: center; gap: 14px; flex-wrap: wrap; padding: 20px 24px; }
-.showcase-card--g .showcase-card__tag { margin: 0; align-self: center; }
+.showcase-card--g {
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+  min-height: 190px;
+}
+.showcase-card--g .showcase-card__tag {
+  margin: 14px 0 auto 14px;
+  align-self: flex-start;
+}
+.showcase-card--g .showcase-card__body {
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  gap: 4px;
+  max-width: 46%;
+  margin-left: auto;
+  padding: 20px 24px;
+  flex-wrap: nowrap;
+}
 .showcase-card--g .showcase-card__title { font-size: clamp(18px, 1.8vw, 24px); }
 
 .showcase-card--pink .showcase-card__media   { background: radial-gradient(circle at 30% 20%, #FFD3EA, #FF62B8 46%, #7A2E8C 100%); }
@@ -3906,7 +3983,13 @@ button.offer__cta:disabled {
   .showcase-card--e { width: 52vw; aspect-ratio: 1 / 1; }
   .showcase-card--f { width: 60vw; aspect-ratio: 4 / 5; }
   .showcase-card--g { width: 80vw; min-height: 170px; }
-  .showcase-card--g .showcase-card__body { padding: 18px 20px; }
+  .showcase-card--g .showcase-card__body {
+    max-width: none;
+    margin-left: 0;
+    align-items: flex-start;
+    text-align: left;
+    padding: 16px 18px;
+  }
   .showcase-card--has-photo .showcase-card__img {
     position: absolute;
     top: 0;
@@ -3926,6 +4009,20 @@ button.offer__cta:disabled {
   }
   .showcase-card__img--photo { object-position: 48% 16%; }
   .showcase-card__img--creative { object-position: 50% 26%; }
+  .showcase-card__img--music { object-position: 50% 42%; }
+  .showcase-card__img--assist { object-position: 62% 50%; }
+  .showcase-card__img--content { object-position: 50% 45%; }
+  .showcase-card__img--business { object-position: 50% 43%; }
+  .showcase-card--g.showcase-card--has-photo .showcase-card__media::after {
+    background:
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 38%,
+        rgba(46, 20, 90, 0.42) 68%,
+        rgba(28, 10, 60, 0.82) 100%
+      );
+  }
 }
 
 @media (max-width: 560px) {

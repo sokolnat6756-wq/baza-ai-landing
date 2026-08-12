@@ -570,11 +570,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     0 0 46px rgba(255, 61, 158, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
+.hero-collage__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  border: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.hero-collage__img--main {
+  object-position: 50% 18%;
+}
+.hero-collage__img--portrait {
+  object-position: 52% 22%;
+}
+.hero-collage__img--macro {
+  object-position: 48% 42%;
+}
 .hero-collage__sheen {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
-    linear-gradient(160deg, rgba(255,255,255,0.3) 0%, transparent 34%, transparent 60%, rgba(36, 15, 82, 0.22) 100%);
+    linear-gradient(160deg, rgba(255,255,255,0.22) 0%, transparent 32%, transparent 58%, rgba(46, 20, 90, 0.18) 100%),
+    linear-gradient(200deg, rgba(169, 116, 255, 0.12) 0%, transparent 42%, rgba(255, 95, 170, 0.1) 100%);
   pointer-events: none;
 }
 
@@ -592,18 +614,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transform: rotate(var(--tilt));
   z-index: 3;
   animation: hero-float 7.5s ease-in-out infinite;
-}
-.hero-collage__photo--main::before {
-  content: "";
-  position: absolute;
-  width: 42%;
-  height: 34%;
-  top: 16%;
-  left: 30%;
-  border-radius: 50% 50% 46% 46%;
-  background:
-    radial-gradient(circle at 40% 32%, #fff8fb 0%, #f5d0e8 38%, #d9a0d8 72%, transparent 73%);
-  opacity: 0.92;
 }
 .hero-collage__photo--secondary-a {
   --tilt: 4.5deg;
@@ -645,14 +655,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   letter-spacing: 0.02em;
   color: #FFFFFF;
   padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(42, 18, 78, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 999px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow:
-    0 8px 20px rgba(36, 15, 82, 0.2),
-    0 0 16px rgba(255, 61, 158, 0.24);
+    0 8px 20px rgba(36, 15, 82, 0.28),
+    0 0 16px rgba(255, 61, 158, 0.22);
   white-space: nowrap;
 }
 .hero-label::before {
@@ -3749,6 +3759,9 @@ button.offer__cta:disabled {
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__actions .btn { width: 100%; flex: none; }
   .hero-collage { aspect-ratio: 0.92 / 1; max-height: none; }
+  .hero-collage__img--main { object-position: 50% 14%; }
+  .hero-collage__img--portrait { object-position: 50% 18%; }
+  .hero-collage__img--macro { object-position: 50% 40%; }
   .hero-label { font-size: 9.5px; padding: 5px 9px; }
   .hero-label--1 { left: 2px; }
   .hero-label--4 { right: 2px; }

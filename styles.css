@@ -1410,18 +1410,90 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
+}
+.showcase-card__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.showcase-card__img--photo {
+  object-position: 50% 18%;
+}
+.showcase-card__img--creative {
+  object-position: 52% 28%;
+}
+.showcase-card__video,
+.showcase-card__video-poster {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.showcase-card__video-poster {
+  z-index: 0;
+}
+.showcase-card__video {
+  z-index: 0;
 }
 .showcase-card__media::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(200deg, transparent 34%, rgba(20, 8, 48, 0.72) 100%);
+  pointer-events: none;
+}
+.showcase-card--has-photo .showcase-card__media::after {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(36, 15, 82, 0.06) 0%,
+      transparent 28%,
+      rgba(46, 20, 90, 0.28) 58%,
+      rgba(28, 10, 60, 0.7) 100%
+    );
+}
+.showcase-card--f.showcase-card--has-photo .showcase-card__media::after {
+  background:
+    linear-gradient(
+      185deg,
+      rgba(36, 15, 82, 0.08) 0%,
+      transparent 32%,
+      rgba(70, 28, 120, 0.34) 62%,
+      rgba(28, 10, 60, 0.74) 100%
+    );
+}
+.showcase-card--has-video .showcase-card__media::after {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 42%,
+      rgba(70, 28, 120, 0.22) 68%,
+      rgba(28, 10, 60, 0.72) 100%
+    );
 }
 .showcase-card__sheen {
   position: absolute;
   inset: -20% -30%;
+  z-index: 2;
   background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.55), transparent 60%);
   mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 
 .showcase-card__tag {
@@ -1483,6 +1555,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .showcase-card--violet .showcase-card__media { background: radial-gradient(circle at 40% 30%, #E4D3FF, #A974FF 46%, #4A1F8C 100%); }
 .showcase-card--pink2 .showcase-card__media  { background: radial-gradient(circle at 60% 70%, #FFD9E6, #FF6E8E 46%, #8C2E4F 100%); }
 .showcase-card--ai .showcase-card__media     { background: linear-gradient(120deg, #6A30FF 0%, #A974FF 42%, #2F7DFF 100%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-card__video {
+    display: none;
+  }
+}
 
 /* ============================================================
    ACCORDION
@@ -3820,6 +3898,8 @@ button.offer__cta:disabled {
   .showcase-card--f { width: 60vw; aspect-ratio: 4 / 5; }
   .showcase-card--g { width: 80vw; min-height: 170px; }
   .showcase-card--g .showcase-card__body { padding: 18px 20px; }
+  .showcase-card__img--photo { object-position: 48% 16%; }
+  .showcase-card__img--creative { object-position: 50% 26%; }
 }
 
 @media (max-width: 560px) {

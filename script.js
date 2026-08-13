@@ -83,38 +83,102 @@
   /* ---------- Липкая мобильная кнопка покупки ---------- */
   const stickyCta = document.getElementById("stickyCta");
   const pricing = document.getElementById("pricing");
+  const pricingPanel = document.querySelector("#pricing .pricing__panel");
   const finalCta = document.querySelector(".final-cta");
   const footer = document.querySelector("footer.footer");
 
   if (stickyCta) {
     let ticking = false;
-
-    function isInView(el) {
-      if (!el) return false;
-      const r = el.getBoundingClientRect();
-      return r.top < window.innerHeight && r.bottom > 0;
-    }
+    let pricingInView = false;
+    let endInView = false;
 
     function updateSticky() {
       ticking = false;
       // Показываем после прокрутки первого экрана
       const scrolled = window.scrollY > window.innerHeight * 0.6;
-
-      // Прячем, когда секция тарифов на экране (чтобы не дублировать)
-      const pricingVisible = isInView(pricing);
-
-      // Прячем на финальном CTA и footer (чтобы не дублировать / не перекрывать)
-      const endVisible = isInView(finalCta) || isInView(footer);
-
-      stickyCta.classList.toggle("is-visible", scrolled && !pricingVisible && !endVisible);
+      stickyCta.classList.toggle("is-visible", scrolled && !pricingInView && !endInView);
     }
 
-    window.addEventListener("scroll", function () {
+    function requestStickyUpdate() {
       if (!ticking) {
         window.requestAnimationFrame(updateSticky);
         ticking = true;
       }
-    }, { passive: true });
+    }
+
+    function isInView(el) {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return r.top < vh * 0.92 && r.bottom > vh * 0.08;
+    }
+
+    function syncStickyFlagsFromRect() {
+      pricingInView = isInView(pricing) || isInView(pricingPanel);
+      endInView = isInView(finalCta) || isInView(footer);
+    }
+
+    if ("IntersectionObserver" in window) {
+      const pricingHits = new Set();
+      const endHits = new Set();
+
+      const pricingIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) pricingHits.add(entry.target);
+            else pricingHits.delete(entry.target);
+          });
+          pricingInView = pricingHits.size > 0;
+          requestStickyUpdate();
+        },
+        {
+          // Прячем sticky, как только #pricing / форма заметно входят в экран
+          // (нижний rootMargin учитывает зону самой sticky-панели)
+          root: null,
+          threshold: [0, 0.02, 0.08],
+          rootMargin: "0px 0px -12% 0px",
+        }
+      );
+
+      if (pricing) pricingIo.observe(pricing);
+      if (pricingPanel) pricingIo.observe(pricingPanel);
+
+      const endIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) endHits.add(entry.target);
+            else endHits.delete(entry.target);
+          });
+          endInView = endHits.size > 0;
+          requestStickyUpdate();
+        },
+        {
+          root: null,
+          threshold: 0,
+          rootMargin: "0px 0px -8% 0px",
+        }
+      );
+
+      if (finalCta) endIo.observe(finalCta);
+      if (footer) endIo.observe(footer);
+    } else {
+      window.addEventListener(
+        "scroll",
+        function () {
+          syncStickyFlagsFromRect();
+          requestStickyUpdate();
+        },
+        { passive: true }
+      );
+      syncStickyFlagsFromRect();
+    }
+
+    window.addEventListener("scroll", requestStickyUpdate, { passive: true });
+    window.addEventListener("resize", requestStickyUpdate, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", requestStickyUpdate, { passive: true });
+      window.visualViewport.addEventListener("scroll", requestStickyUpdate, { passive: true });
+    }
 
     updateSticky();
   }
@@ -145,6 +209,7 @@
   const offerPriceNow = document.getElementById("offerPriceNow");
   const offerPriceSave = document.getElementById("offerPriceSave");
   const stickyCtaPrice = document.getElementById("stickyCtaPrice");
+  const pricingCheckoutPrice = document.getElementById("pricingCheckoutPrice");
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const ALLOWED_EMAIL_DOMAINS = new Set([
@@ -261,6 +326,10 @@
 
     if (stickyCtaPrice) {
       stickyCtaPrice.textContent = rub;
+    }
+
+    if (pricingCheckoutPrice) {
+      pricingCheckoutPrice.textContent = rub;
     }
 
     if (offerCta && !offerCta.classList.contains("is-loading")) {

@@ -603,7 +603,7 @@
             <span class="showcase-card__media" aria-hidden="true">
               <img
                 class="showcase-card__img showcase-card__img--music"
-                src="assets/inside/music-voice.webp"
+                src="assets/inside/music-voice-new.webp"
                 alt=""
                 width="900"
                 height="1200"
@@ -623,7 +623,7 @@
             <span class="showcase-card__media" aria-hidden="true">
               <img
                 class="showcase-card__img showcase-card__img--business"
-                src="assets/inside/business-visual.webp"
+                src="assets/inside/business-visual-serum.webp"
                 alt=""
                 width="900"
                 height="1200"
@@ -998,7 +998,32 @@
         <div class="assistants__stage reveal">
           <article class="ai-hero">
             <span class="ai-hero__num" aria-hidden="true">01</span>
-            <span class="ai-hero__orb" aria-hidden="true"><span class="ai-hero__mono"></span></span>
+            <span class="ai-hero__orb ai-pic ai-pic--marketing" aria-hidden="true">
+              <span class="ai-pic__halo"></span>
+              <span class="ai-pic__dot ai-pic__dot--1"></span>
+              <span class="ai-pic__dot ai-pic__dot--2"></span>
+              <span class="ai-pic__line"></span>
+              <svg class="ai-pic__svg" viewBox="0 0 64 64" fill="none" focusable="false">
+                <circle cx="28" cy="30" r="16.5" stroke="rgba(255,255,255,0.35)" stroke-width="1.4"/>
+                <circle cx="28" cy="30" r="10.5" stroke="rgba(255,230,245,0.55)" stroke-width="1.5"/>
+                <circle cx="28" cy="30" r="4.2" fill="url(#mktCore)"/>
+                <path d="M42 44 L48 36 L54 39 L60 28" stroke="url(#mktLine)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="48" cy="36" r="1.7" fill="#FFE9F6"/>
+                <circle cx="54" cy="39" r="1.7" fill="#DCE6FF"/>
+                <circle cx="60" cy="28" r="2" fill="#FFFFFF"/>
+                <defs>
+                  <radialGradient id="mktCore" cx="40%" cy="35%" r="70%">
+                    <stop offset="0%" stop-color="#FFFFFF"/>
+                    <stop offset="55%" stop-color="#FFB0D9"/>
+                    <stop offset="100%" stop-color="#FF4FA8"/>
+                  </radialGradient>
+                  <linearGradient id="mktLine" x1="42" y1="44" x2="60" y2="28" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FF9AD0"/>
+                    <stop offset="1" stop-color="#B8C9FF"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div class="ai-hero__body">
               <h3 class="ai-hero__name">ИИ-маркетолог</h3>
               <p class="ai-hero__desc">
@@ -1016,25 +1041,77 @@
 
           <div class="assistants__team">
             <article class="ai-card ai-card--b ai-card--light">
-              <span class="ai-card__orb" aria-hidden="true"><span class="ai-card__mono"></span></span>
+              <span class="ai-card__orb ai-pic ai-pic--content" aria-hidden="true">
+                <svg class="ai-pic__svg" viewBox="0 0 48 48" fill="none" focusable="false">
+                  <rect x="10" y="11" width="28" height="26" rx="5" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.75)" stroke-width="1.4"/>
+                  <rect x="10" y="11" width="28" height="7" rx="5" fill="rgba(255,255,255,0.55)"/>
+                  <rect x="10" y="15" width="28" height="3" fill="rgba(255,255,255,0.55)"/>
+                  <rect x="14" y="22" width="6" height="5" rx="1.2" fill="#FFE1F1"/>
+                  <rect x="22" y="22" width="6" height="5" rx="1.2" fill="rgba(255,255,255,0.85)"/>
+                  <rect x="30" y="22" width="6" height="5" rx="1.2" fill="#FFB7D9"/>
+                  <rect x="14" y="29" width="6" height="5" rx="1.2" fill="rgba(255,255,255,0.7)"/>
+                  <rect x="22" y="29" width="6" height="5" rx="1.2" fill="#FFE1F1"/>
+                  <rect x="30" y="29" width="6" height="5" rx="1.2" fill="rgba(255,255,255,0.9)"/>
+                </svg>
+              </span>
               <h3 class="ai-card__name">Контент-план</h3>
               <p class="ai-card__tags">Идеи · рубрики · темы для блога и бизнеса</p>
             </article>
 
             <article class="ai-card ai-card--c ai-card--dark">
-              <span class="ai-card__orb" aria-hidden="true"><span class="ai-card__mono"></span></span>
+              <span class="ai-card__orb ai-pic ai-pic--product" aria-hidden="true">
+                <svg class="ai-pic__svg" viewBox="0 0 48 48" fill="none" focusable="false">
+                  <rect x="8" y="14" width="22" height="26" rx="4" fill="rgba(255,255,255,0.18)" stroke="rgba(220,230,255,0.7)" stroke-width="1.3"/>
+                  <rect x="11" y="17" width="16" height="11" rx="2.2" fill="url(#prodTile)"/>
+                  <rect x="11" y="31" width="12" height="2.4" rx="1.2" fill="rgba(255,255,255,0.75)"/>
+                  <rect x="11" y="35" width="8" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+                  <rect x="20" y="10" width="20" height="24" rx="4" fill="rgba(110,147,245,0.35)" stroke="rgba(220,230,255,0.85)" stroke-width="1.3"/>
+                  <rect x="24" y="14" width="12" height="9" rx="2" fill="rgba(255,255,255,0.55)"/>
+                  <rect x="24" y="26" width="10" height="2.2" rx="1.1" fill="rgba(255,255,255,0.8)"/>
+                  <rect x="30" y="8" width="10" height="7" rx="2" fill="#7DA0FF" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+                  <defs>
+                    <linearGradient id="prodTile" x1="11" y1="17" x2="27" y2="28" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#DCE6FF"/>
+                      <stop offset="1" stop-color="#6E93F5"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
               <h3 class="ai-card__name">Карточки товаров</h3>
               <p class="ai-card__tags">Анализ и улучшение карточек для маркетплейсов</p>
             </article>
 
             <article class="ai-card ai-card--d ai-card--light">
-              <span class="ai-card__orb" aria-hidden="true"><span class="ai-card__mono"></span></span>
+              <span class="ai-card__orb ai-pic ai-pic--menu" aria-hidden="true">
+                <svg class="ai-pic__svg" viewBox="0 0 48 48" fill="none" focusable="false">
+                  <ellipse cx="24" cy="33" rx="14" ry="4.5" fill="rgba(255,255,255,0.28)" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/>
+                  <path d="M12 28c0-9 5.2-15 12-15s12 6 12 15" stroke="rgba(255,255,255,0.85)" stroke-width="1.6" stroke-linecap="round"/>
+                  <path d="M12 28c1.5 2.2 6.5 3.6 12 3.6s10.5-1.4 12-3.6" fill="rgba(255,255,255,0.2)" stroke="rgba(243,217,255,0.8)" stroke-width="1.2"/>
+                  <circle cx="24" cy="14.5" r="1.6" fill="#FFFFFF"/>
+                  <path d="M34 12l1.1 2.4 2.5.4-1.8 1.8.4 2.5-2.2-1.2-2.2 1.2.4-2.5-1.8-1.8 2.5-.4z" fill="#FFE9F6" opacity="0.95"/>
+                </svg>
+              </span>
               <h3 class="ai-card__name">Меню и рецепты</h3>
               <p class="ai-card__tags">Меню на неделю · рецепты · список продуктов</p>
             </article>
 
             <article class="ai-card ai-card--e ai-card--wide ai-card--dark">
-              <span class="ai-card__orb" aria-hidden="true"><span class="ai-card__mono"></span></span>
+              <span class="ai-card__orb ai-pic ai-pic--tutors" aria-hidden="true">
+                <svg class="ai-pic__svg" viewBox="0 0 48 48" fill="none" focusable="false">
+                  <path d="M24 14 L10 20.5 V34.5 L24 41 L38 34.5 V20.5 Z" fill="rgba(255,255,255,0.12)" stroke="rgba(255,225,240,0.75)" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M24 14 V41" stroke="rgba(255,255,255,0.55)" stroke-width="1.2"/>
+                  <path d="M14.5 22.5 L24 27.5 L33.5 22.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.1" stroke-linecap="round"/>
+                  <path d="M14.5 27 L24 32 L33.5 27" stroke="rgba(255,255,255,0.28)" stroke-width="1.1" stroke-linecap="round"/>
+                  <circle cx="35.5" cy="13.5" r="3.2" fill="url(#tutorSpark)"/>
+                  <path d="M35.5 9.8 V11.2 M35.5 15.8 V17.2 M31.8 13.5 H33.2 M37.8 13.5 H39.2" stroke="#FFE9F6" stroke-width="1.1" stroke-linecap="round"/>
+                  <defs>
+                    <radialGradient id="tutorSpark" cx="40%" cy="35%" r="70%">
+                      <stop offset="0%" stop-color="#FFFFFF"/>
+                      <stop offset="100%" stop-color="#FF4FA8"/>
+                    </radialGradient>
+                  </defs>
+                </svg>
+              </span>
               <div class="ai-card__body">
                 <h3 class="ai-card__name">ИИ-репетиторы</h3>
                 <p class="ai-card__tags">Русский · английский · математика · география · ОГЭ/ЕГЭ</p>
@@ -1042,13 +1119,43 @@
             </article>
 
             <article class="ai-card ai-card--f ai-card--light">
-              <span class="ai-card__orb" aria-hidden="true"><span class="ai-card__mono"></span></span>
+              <span class="ai-card__orb ai-pic ai-pic--video" aria-hidden="true">
+                <svg class="ai-pic__svg" viewBox="0 0 48 48" fill="none" focusable="false">
+                  <rect x="9" y="12" width="30" height="20" rx="4" fill="rgba(255,255,255,0.2)" stroke="rgba(220,230,255,0.85)" stroke-width="1.4"/>
+                  <path d="M21 17.5 V26.5 L29.5 22 Z" fill="#FFFFFF" opacity="0.95"/>
+                  <rect x="12" y="36" width="14" height="1.8" rx="0.9" fill="rgba(255,255,255,0.7)"/>
+                  <rect x="28" y="36" width="8" height="1.8" rx="0.9" fill="rgba(182,200,255,0.85)"/>
+                  <rect x="12" y="40" width="8" height="1.5" rx="0.75" fill="rgba(255,255,255,0.4)"/>
+                  <rect x="22" y="40" width="12" height="1.5" rx="0.75" fill="rgba(255,255,255,0.55)"/>
+                </svg>
+              </span>
               <h3 class="ai-card__name">Промпты для ИИ-видео</h3>
               <p class="ai-card__tags">Промпты для видео в Seedance AI</p>
             </article>
 
             <article class="ai-card ai-card--g ai-card--tall ai-card--dark">
-              <span class="ai-card__orb" aria-hidden="true"><span class="ai-card__mono"></span></span>
+              <span class="ai-card__orb ai-pic ai-pic--professions" aria-hidden="true">
+                <svg class="ai-pic__svg" viewBox="0 0 48 48" fill="none" focusable="false">
+                  <path d="M14 34 L30 14" stroke="url(#wandStroke)" stroke-width="2.2" stroke-linecap="round"/>
+                  <circle cx="32.2" cy="11.8" r="3.1" fill="url(#wandTip)"/>
+                  <path d="M32.2 7.8 V9.4 M32.2 14.2 V15.8 M28.2 11.8 H29.8 M34.6 11.8 H36.2" stroke="#FFE9F6" stroke-width="1.15" stroke-linecap="round"/>
+                  <rect x="10" y="28" width="16" height="12" rx="2.4" fill="rgba(255,255,255,0.14)" stroke="rgba(236,214,250,0.7)" stroke-width="1.2"/>
+                  <rect x="15" y="25.5" width="6" height="3.2" rx="1" fill="rgba(255,255,255,0.35)" stroke="rgba(255,255,255,0.55)" stroke-width="0.9"/>
+                  <path d="M10 33.5 H26" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+                  <rect x="12.5" y="30.2" width="4" height="2.2" rx="0.6" fill="rgba(255,177,217,0.55)"/>
+                  <rect x="18" y="30.2" width="4" height="2.2" rx="0.6" fill="rgba(201,139,196,0.55)"/>
+                  <defs>
+                    <linearGradient id="wandStroke" x1="14" y1="34" x2="30" y2="14" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#C98BC4"/>
+                      <stop offset="1" stop-color="#FFE1F1"/>
+                    </linearGradient>
+                    <radialGradient id="wandTip" cx="40%" cy="35%" r="70%">
+                      <stop offset="0%" stop-color="#FFFFFF"/>
+                      <stop offset="100%" stop-color="#FF7EC0"/>
+                    </radialGradient>
+                  </defs>
+                </svg>
+              </span>
               <h3 class="ai-card__name">Помощники для профессий</h3>
               <p class="ai-card__tags">Видеопромпты для флористов, кондитеров, дизайнеров</p>
             </article>

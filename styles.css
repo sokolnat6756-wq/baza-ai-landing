@@ -3134,6 +3134,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   color: var(--text-2);
 }
 
+.offer-email__hint {
+  margin: 2px 0 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #9A2A4A;
+  background: rgba(255, 92, 130, 0.10);
+  border: 1px solid rgba(232, 72, 112, 0.28);
+  overflow-wrap: anywhere;
+}
+
 .offer-email__message {
   font-size: 13px;
   line-height: 1.45;
@@ -4172,6 +4185,7 @@ button.offer__cta:disabled {
   .offer-check__text { font-size: 12px; line-height: 1.5; }
   .offer-check__label { gap: 10px; }
   .offer-field__input { font-size: 14px; padding: 11px 14px; }
+  .offer-email__hint { font-size: 13px; padding: 8px 10px; }
   .offer-promo__apply { padding: 0 14px; font-size: 13px; }
   .sticky-cta { display: flex; }
   body { padding-bottom: 78px; }

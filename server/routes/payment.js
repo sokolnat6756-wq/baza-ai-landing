@@ -167,8 +167,8 @@ async function trySendWarmLeadToGoogleSheets(order) {
 
   await sendPaymentToGoogleSheets({
     date: new Date().toISOString(),
-    product: "База ИИ",
-    tariff: "Тёплый лид — начал оплату",
+    product: "Тёплый лид — начал оплату",
+    tariff: "База ИИ",
     name: order.name || "",
     email: order.email || "",
     phone: order.phone || "",

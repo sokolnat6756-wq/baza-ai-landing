@@ -6,6 +6,7 @@
 
 var SHEET_NAME = "Оплаты";
 var EVENT_KEY_COLUMN = 11; // колонка K — eventKey (скрытый идентификатор события)
+var PHONE_COLUMN = 6; // колонка F — Телефон
 
 var ROW_COLORS = {
   warm_lead: "#FFF2CC",
@@ -33,6 +34,7 @@ function doPost(e) {
     var row = buildRow_(payload, eventKey);
     sheet.appendRow(row);
     var newRow = sheet.getLastRow();
+    setPhoneAsText_(sheet, newRow, payload.phone);
     applyRowColor_(sheet, newRow, payload);
 
     return jsonResponse_({ ok: true, duplicate: false, eventKey: eventKey, row: newRow });
@@ -97,6 +99,18 @@ function hasEventKey_(sheet, eventKey) {
   return false;
 }
 
+function formatPhoneForSheet_(phone) {
+  return String(phone || "").trim();
+}
+
+function setPhoneAsText_(sheet, row, phone) {
+  var value = formatPhoneForSheet_(phone);
+  if (!value) return;
+  var cell = sheet.getRange(row, PHONE_COLUMN);
+  cell.setNumberFormat("@");
+  cell.setValue(value);
+}
+
 function buildRow_(payload, eventKey) {
   return [
     payload.date || new Date().toISOString(),
@@ -104,7 +118,7 @@ function buildRow_(payload, eventKey) {
     payload.tariff || "",
     payload.name || "",
     payload.email || "",
-    payload.phone || "",
+    formatPhoneForSheet_(payload.phone),
     payload.amount != null ? payload.amount : "",
     payload.promoCode || "",
     payload.partner != null ? payload.partner : "",

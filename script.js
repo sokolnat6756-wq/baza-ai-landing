@@ -222,10 +222,10 @@
     "bk.ru",
   ]);
   const EMAIL_DOMAIN_ERROR_HTML =
-    "Эта почта не подходит для оформления доступа.<br>" +
-    "Укажите почту mail.ru, yandex.ru, ya.ru, inbox.ru, list.ru или bk.ru.<br><br>" +
-    "Если не получается оплатить, напишите в службу заботы:<br>" +
-    '<a href="https://t.me/digital_izba" target="_blank" rel="noopener noreferrer" class="offer-email__link">https://t.me/digital_izba</a>';
+    "Для оформления доступа сейчас нужен email:<br>" +
+    "mail.ru, yandex.ru, ya.ru, inbox.ru, list.ru или bk.ru.<br><br>" +
+    "Если вы из Беларуси, Казахстана или другой страны, можно указать почту на одном из этих доменов.<br><br>" +
+    'Не получается оплатить? Напишите в <a href="https://t.me/digital_izba" target="_blank" rel="noopener noreferrer" class="offer-email__link">службу заботы</a>.';
   const BASE_AMOUNT = 349000;
   const LIST_PRICE = 19000;
 

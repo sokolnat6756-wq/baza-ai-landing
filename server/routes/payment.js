@@ -173,6 +173,10 @@ async function trySendToGoogleSheets(orderId) {
         order.partnerReward != null && order.partnerCode
           ? order.partnerReward / 100
           : "",
+      productSlug: "baza-ai",
+      orderId: order.orderId,
+      eventType: "paid",
+      eventKey: "baza-ai:" + order.orderId + ":paid",
     });
     if (result.sent) {
       updateOrderByOrderId(orderId, {

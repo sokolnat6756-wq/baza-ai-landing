@@ -23,6 +23,10 @@ async function sendPaymentToGoogleSheets(payload) {
     promoCode: payload.promoCode || "",
     partner: payload.partner != null ? payload.partner : "",
     partnerReward: payload.partnerReward != null ? payload.partnerReward : "",
+    productSlug: payload.productSlug || "",
+    orderId: payload.orderId || "",
+    eventType: payload.eventType || "",
+    eventKey: payload.eventKey || "",
   };
 
   try {

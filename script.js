@@ -83,31 +83,102 @@
   /* ---------- Липкая мобильная кнопка покупки ---------- */
   const stickyCta = document.getElementById("stickyCta");
   const pricing = document.getElementById("pricing");
+  const pricingPanel = document.querySelector("#pricing .pricing__panel");
+  const finalCta = document.querySelector(".final-cta");
+  const footer = document.querySelector("footer.footer");
 
   if (stickyCta) {
     let ticking = false;
+    let pricingInView = false;
+    let endInView = false;
 
     function updateSticky() {
       ticking = false;
       // Показываем после прокрутки первого экрана
       const scrolled = window.scrollY > window.innerHeight * 0.6;
-
-      // Прячем, когда секция тарифов на экране (чтобы не дублировать)
-      let pricingVisible = false;
-      if (pricing) {
-        const r = pricing.getBoundingClientRect();
-        pricingVisible = r.top < window.innerHeight && r.bottom > 0;
-      }
-
-      stickyCta.classList.toggle("is-visible", scrolled && !pricingVisible);
+      stickyCta.classList.toggle("is-visible", scrolled && !pricingInView && !endInView);
     }
 
-    window.addEventListener("scroll", function () {
+    function requestStickyUpdate() {
       if (!ticking) {
         window.requestAnimationFrame(updateSticky);
         ticking = true;
       }
-    }, { passive: true });
+    }
+
+    function isInView(el) {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return r.top < vh * 0.92 && r.bottom > vh * 0.08;
+    }
+
+    function syncStickyFlagsFromRect() {
+      pricingInView = isInView(pricing) || isInView(pricingPanel);
+      endInView = isInView(finalCta) || isInView(footer);
+    }
+
+    if ("IntersectionObserver" in window) {
+      const pricingHits = new Set();
+      const endHits = new Set();
+
+      const pricingIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) pricingHits.add(entry.target);
+            else pricingHits.delete(entry.target);
+          });
+          pricingInView = pricingHits.size > 0;
+          requestStickyUpdate();
+        },
+        {
+          // Прячем sticky, как только #pricing / форма заметно входят в экран
+          // (нижний rootMargin учитывает зону самой sticky-панели)
+          root: null,
+          threshold: [0, 0.02, 0.08],
+          rootMargin: "0px 0px -12% 0px",
+        }
+      );
+
+      if (pricing) pricingIo.observe(pricing);
+      if (pricingPanel) pricingIo.observe(pricingPanel);
+
+      const endIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) endHits.add(entry.target);
+            else endHits.delete(entry.target);
+          });
+          endInView = endHits.size > 0;
+          requestStickyUpdate();
+        },
+        {
+          root: null,
+          threshold: 0,
+          rootMargin: "0px 0px -8% 0px",
+        }
+      );
+
+      if (finalCta) endIo.observe(finalCta);
+      if (footer) endIo.observe(footer);
+    } else {
+      window.addEventListener(
+        "scroll",
+        function () {
+          syncStickyFlagsFromRect();
+          requestStickyUpdate();
+        },
+        { passive: true }
+      );
+      syncStickyFlagsFromRect();
+    }
+
+    window.addEventListener("scroll", requestStickyUpdate, { passive: true });
+    window.addEventListener("resize", requestStickyUpdate, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", requestStickyUpdate, { passive: true });
+      window.visualViewport.addEventListener("scroll", requestStickyUpdate, { passive: true });
+    }
 
     updateSticky();
   }
@@ -133,11 +204,13 @@
   const offerPromo = document.getElementById("offerPromo");
   const offerPromoApply = document.getElementById("offerPromoApply");
   const offerPromoMessage = document.getElementById("offerPromoMessage");
+  const offerEmailHint = document.getElementById("offerEmailHint");
   const offerEmailMessage = document.getElementById("offerEmailMessage");
   const offerFormError = document.getElementById("offerFormError");
   const offerPriceNow = document.getElementById("offerPriceNow");
   const offerPriceSave = document.getElementById("offerPriceSave");
   const stickyCtaPrice = document.getElementById("stickyCtaPrice");
+  const pricingCheckoutPrice = document.getElementById("pricingCheckoutPrice");
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const ALLOWED_EMAIL_DOMAINS = new Set([
@@ -148,8 +221,11 @@
     "list.ru",
     "bk.ru",
   ]);
-  const EMAIL_DOMAIN_HINT =
-    "Укажите email на mail.ru, yandex.ru, inbox.ru, list.ru или bk.ru — на него придёт доступ к обучению.";
+  const EMAIL_DOMAIN_ERROR_HTML =
+    "Эта почта не подходит для оформления доступа.<br>" +
+    "Укажите почту mail.ru, yandex.ru, ya.ru, inbox.ru, list.ru или bk.ru.<br><br>" +
+    "Если не получается оплатить, напишите в службу заботы:<br>" +
+    '<a href="https://t.me/digital_izba" target="_blank" rel="noopener noreferrer" class="offer-email__link">https://t.me/digital_izba</a>';
   const BASE_AMOUNT = 349000;
   const LIST_PRICE = 19000;
 
@@ -189,23 +265,42 @@
     return getEmailState().valid;
   }
 
+  function hideEmailHint() {
+    if (!offerEmailHint) return;
+    offerEmailHint.hidden = true;
+  }
+
+  function showEmailHint() {
+    if (!offerEmailHint) return;
+    offerEmailHint.hidden = false;
+  }
+
   function hideEmailMessage() {
     if (!offerEmailMessage) return;
     offerEmailMessage.hidden = true;
     offerEmailMessage.textContent = "";
+    offerEmailMessage.innerHTML = "";
+    offerEmailMessage.classList.remove("offer-email__message--error");
   }
 
-  function showEmailMessage(message) {
+  function showEmailError(html) {
     if (!offerEmailMessage) return;
-    offerEmailMessage.textContent = message;
+    offerEmailMessage.innerHTML = html;
+    offerEmailMessage.classList.add("offer-email__message--error");
     offerEmailMessage.hidden = false;
   }
 
   function updateEmailFeedback() {
     const state = getEmailState();
-    if (state.showDomainError) {
-      showEmailMessage(EMAIL_DOMAIN_HINT);
+
+    if (state.valid) {
+      hideEmailHint();
+      hideEmailMessage();
+    } else if (state.showDomainError) {
+      hideEmailHint();
+      showEmailError(EMAIL_DOMAIN_ERROR_HTML);
     } else {
+      showEmailHint();
       hideEmailMessage();
     }
   }
@@ -254,6 +349,10 @@
 
     if (stickyCtaPrice) {
       stickyCtaPrice.textContent = rub;
+    }
+
+    if (pricingCheckoutPrice) {
+      pricingCheckoutPrice.textContent = rub;
     }
 
     if (offerCta && !offerCta.classList.contains("is-loading")) {
@@ -419,6 +518,125 @@
     });
 
     updatePriceUI(BASE_AMOUNT);
+    updateEmailFeedback();
     updateOfferCta();
   }
+
+  /* ---------- Hero typewriter (только декоративная строка) ---------- */
+  (function initHeroTypewriter() {
+    const textEl = document.getElementById("heroTypewriterText");
+    if (!textEl) return;
+
+    const phrases = [
+      "создавать фото",
+      "делать видео",
+      "писать тексты",
+      "создавать музыку",
+      "работать с ИИ-помощниками"
+    ];
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    textEl.textContent = phrases[0];
+    if (reduceMotion) return;
+
+    const typingSpeed = 65;
+    const deletingSpeed = 40;
+    const pauseDuration = 1500;
+    let phraseIndex = 0;
+    let charIndex = phrases[0].length;
+    let deleting = false;
+
+    function tick() {
+      const current = phrases[phraseIndex];
+
+      if (!deleting) {
+        if (charIndex < current.length) {
+          charIndex += 1;
+          textEl.textContent = current.slice(0, charIndex);
+          window.setTimeout(tick, typingSpeed);
+          return;
+        }
+        window.setTimeout(function () {
+          deleting = true;
+          tick();
+        }, pauseDuration);
+        return;
+      }
+
+      if (charIndex > 0) {
+        charIndex -= 1;
+        textEl.textContent = current.slice(0, charIndex);
+        window.setTimeout(tick, deletingSpeed);
+        return;
+      }
+
+      deleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      window.setTimeout(tick, typingSpeed);
+    }
+
+    window.setTimeout(tick, pauseDuration);
+  })();
+
+  /* ---------- Showcase «ИИ-ВИДЕО»: Safari/iOS autoplay ---------- */
+  (function initShowcaseVideoAutoplay() {
+    const videos = document.querySelectorAll(".showcase-card__video");
+    if (!videos.length) return;
+
+    const reduceMotionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduceMotionMq.matches) return;
+
+    function tryPlay(video) {
+      if (reduceMotionMq.matches) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () {});
+      }
+    }
+
+    videos.forEach(function (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "");
+
+      function onReadyOnce() {
+        tryPlay(video);
+      }
+      video.addEventListener("loadeddata", onReadyOnce, { once: true });
+      video.addEventListener("canplay", onReadyOnce, { once: true });
+      if (video.readyState >= 2) onReadyOnce();
+    });
+
+    if (!("IntersectionObserver" in window)) {
+      videos.forEach(tryPlay);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          const video = entry.target;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+            tryPlay(video);
+          } else if (!entry.isIntersecting) {
+            video.pause();
+          }
+        });
+      },
+      {
+        /* viewport: works for page scroll + horizontal carousel swipe into view */
+        root: null,
+        threshold: [0, 0.35, 0.5, 0.75]
+      }
+    );
+
+    videos.forEach(function (video) {
+      io.observe(video);
+    });
+  })();
 })();

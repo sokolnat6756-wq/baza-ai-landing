@@ -201,6 +201,7 @@
   const consentOffer = document.getElementById("consentOffer");
   const offerEmail = document.getElementById("offerEmail");
   const offerName = document.getElementById("offerName");
+  const offerPhone = document.getElementById("offerPhone");
   const offerPromo = document.getElementById("offerPromo");
   const offerPromoApply = document.getElementById("offerPromoApply");
   const offerPromoMessage = document.getElementById("offerPromoMessage");
@@ -433,6 +434,7 @@
     const payload = {
       name: offerName ? offerName.value.trim() : "",
       email: normalizeEmail(offerEmail.value),
+      phone: offerPhone ? offerPhone.value.trim() : "",
       promoCode: appliedPromoCode,
       partnerCode: localStorage.getItem("partnerRef") || "",
       consentPrivacy: consentPrivacy.checked,

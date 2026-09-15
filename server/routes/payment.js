@@ -55,6 +55,7 @@ router.post("/payment/init", async function (req, res) {
   const body = req.body || {};
   const name = String(body.name || "").trim();
   const email = String(body.email || "").trim().toLowerCase();
+  const phone = String(body.phone || "").trim();
   const promoCode = String(body.promoCode || "").trim();
   const partnerCodeInput = String(body.partnerCode || "").trim().toUpperCase();
   const consentPrivacy = Boolean(body.consentPrivacy);
@@ -84,6 +85,7 @@ router.post("/payment/init", async function (req, res) {
     orderId,
     name,
     email,
+    phone,
     promoCode: promo.code || null,
     amount: finalAmount,
     baseAmount: config.basePrice,
@@ -102,6 +104,13 @@ router.post("/payment/init", async function (req, res) {
   }
 
   createOrder(orderData);
+  trySendWarmLeadToGoogleSheets(orderData).catch(function (err) {
+    console.warn(
+      "Не удалось отправить warm_lead в Google Таблицу для заказа",
+      orderId + ":",
+      err && err.message ? err.message : err
+    );
+  });
 
   if (config.mockPayments) {
     const paymentUrl = `${config.siteUrl}/payment-success.html?orderId=${encodeURIComponent(orderId)}`;
@@ -153,6 +162,27 @@ async function trySendAccessEmail(orderId) {
   }
 }
 
+async function trySendWarmLeadToGoogleSheets(order) {
+  if (!order || !order.orderId) return;
+
+  await sendPaymentToGoogleSheets({
+    date: new Date().toISOString(),
+    product: "База ИИ",
+    tariff: "Тёплый лид — начал оплату",
+    name: order.name || "",
+    email: order.email || "",
+    phone: order.phone || "",
+    amount: order.amount != null ? order.amount / 100 : "",
+    promoCode: order.promoCode || "",
+    partner: order.partnerCode || "",
+    partnerReward: "",
+    productSlug: "baza-ai",
+    orderId: order.orderId,
+    eventType: "warm_lead",
+    eventKey: "baza-ai:" + order.orderId + ":warm_lead",
+  });
+}
+
 async function trySendToGoogleSheets(orderId) {
   const order = getOrderByOrderId(orderId);
   if (!order) return;
@@ -165,7 +195,7 @@ async function trySendToGoogleSheets(orderId) {
       tariff: "База ИИ",
       name: order.name,
       email: order.email,
-      phone: "",
+      phone: order.phone || "",
       amount: order.amount / 100,
       promoCode: order.promoCode || "",
       partner: order.partnerCode || "",
